@@ -2,10 +2,35 @@ import { Check, Lock, Mail, User } from "lucide-react";
 import signupDesktop from "../../assets/signup-desktop.png";
 import appleIcon from "../../assets/apple-icon.png";
 import googleIcon from "../../assets/google-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
+import { useState } from "react";
+import { auth_api } from "@/api/auth";
+import { toast } from "react-toastify";
 
 export const SignUp = () => {
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const response = await auth_api.post("/register", {
+        fullname,
+        email,
+        password,
+      });
+      // console.log(response.data);
+      toast.success(response.data.message);
+
+      navigate("/login");
+    } catch (error) {
+      // console.log(error.response?.data?.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
+
   return (
     <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center justify-center text-white">
       <div className="w-[50%] px-56 text-center space-y-6">
@@ -24,6 +49,7 @@ export const SignUp = () => {
             type="text"
             placeholder="Full Name"
             className="outline-none text-black tracking-wider"
+            onChange={(e) => setFullname(e.target.value)}
           />
         </div>
         <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
@@ -32,6 +58,7 @@ export const SignUp = () => {
             type="email"
             placeholder="E-mail"
             className="outline-none text-black tracking-wider"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
@@ -40,9 +67,10 @@ export const SignUp = () => {
             type="password"
             placeholder="Password"
             className="outline-none text-black tracking-wider"
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button to="/home" text={"Sign Up"} />
+        <Button onClick={handleSubmit} text={"Sign Up"} />
         <p className="flex items-center justify-center gap-2">
           Already have an account?
           <Button to="/login" text={"Sign In"} variant="ghost" />

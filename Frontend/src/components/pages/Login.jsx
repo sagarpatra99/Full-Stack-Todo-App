@@ -2,10 +2,32 @@ import { Check, Lock, Mail, User } from "lucide-react";
 import loginDesktop from "../../assets/login-desktop.png";
 import appleIcon from "../../assets/apple-icon.png";
 import googleIcon from "../../assets/google-icon.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
+import { useState } from "react";
+import { auth_api } from "@/api/auth";
+import { toast } from "react-toastify";
 
 export const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async () => {
+    try {
+      const response = await auth_api.post("/login", {
+        email,
+        password,
+      });
+      // console.log(response.data);
+      toast.success(response.data.message);
+
+      navigate("/home");
+    } catch (error) {
+      // console.log(error.response?.data?.message);
+      toast.error(error.response?.data?.message || "Something went wrong");
+    }
+  };
   return (
     <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center justify-center text-white">
       <div className="w-[50%] px-48 bg-purple-400k text-center space-y-6">
@@ -24,6 +46,7 @@ export const Login = () => {
             type="email"
             placeholder="E-mail"
             className="outline-none text-black tracking-wider"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -33,6 +56,7 @@ export const Login = () => {
               type="password"
               placeholder="Password"
               className="outline-none text-black tracking-wider"
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <Button
@@ -42,7 +66,7 @@ export const Login = () => {
             variant="ghost"
           />
         </div>
-        <Button to="/home" text={"Sign In"} />
+        <Button onClick={handleSubmit} text={"Sign In"} />
         <p className="flex items-center justify-center gap-2">
           Don’t have an account?
           <Button to="/signup" text={"Sign Up"} variant="ghost" />
