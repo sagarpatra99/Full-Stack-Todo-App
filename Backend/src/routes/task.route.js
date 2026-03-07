@@ -4,5 +4,6 @@ const identifyUser = require("../middlewares/auth.middleware");
 const taskRouter = express.Router();
 
 taskRouter.post("/create-task", identifyUser, controller.controllerCreateTask);
+taskRouter.delete("/:taskId", identifyUser, controller.controllerDeleteTask);
 
 module.exports = taskRouter;
