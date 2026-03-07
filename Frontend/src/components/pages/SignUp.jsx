@@ -42,7 +42,7 @@ export const SignUp = () => {
             className="outline-none text-black tracking-wider"
           />
         </div>
-        <Button to="/verification" text={"Sign Up"} />
+        <Button to="/home" text={"Sign Up"} />
         <p className="flex items-center justify-center gap-2">
           Already have an account?
           <Button to="/login" text={"Sign In"} variant="ghost" />

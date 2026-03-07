@@ -42,7 +42,7 @@ export const Login = () => {
             variant="ghost"
           />
         </div>
-        <Button to="/verification" text={"Sign In"} />
+        <Button to="/home" text={"Sign In"} />
         <p className="flex items-center justify-center gap-2">
           Don’t have an account?
           <Button to="/signup" text={"Sign Up"} variant="ghost" />
