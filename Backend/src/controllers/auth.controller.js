@@ -81,6 +81,7 @@ const controllerGetMe = async (req, res) => {
     user: {
       fullName: user.fullname,
       email: user.email,
+      profileImg: user.profileImg,
     },
   });
 };
