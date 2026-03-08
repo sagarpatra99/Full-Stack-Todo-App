@@ -1,6 +1,5 @@
 import { Plus, Search } from "lucide-react";
 import { TaskBar } from "../ui/TaskBar";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { CreateTask } from "./CreateTask";
 
@@ -34,18 +33,10 @@ export const AllTask = () => {
         </nav>
         <h4 className="tracking-wider text-4xl py-8">Tasks Lists</h4>
         <div className="flex flex-col gap-6">
-          <Link to={"/details"}>
-            <TaskBar head="Client meeting" para="Tomorrow | 10:30am" />
-          </Link>
-          <Link to={"/details"}>
-            <TaskBar head="Client meeting" para="Tomorrow | 10:30am" />
-          </Link>
-          <Link to={"/details"}>
-            <TaskBar head="Client meeting" para="Tomorrow | 10:30am" />
-          </Link>
-          <Link to={"/details"}>
-            <TaskBar head="Client meeting" para="Tomorrow | 10:30am" />
-          </Link>
+            <TaskBar to="/details" head="Client meeting" para="Tomorrow | 10:30am" />
+            <TaskBar to="/details" head="Client meeting" para="Tomorrow | 10:30am" />
+            <TaskBar to="/details" head="Client meeting" para="Tomorrow | 10:30am" />
+            <TaskBar to="/details" head="Client meeting" para="Tomorrow | 10:30am" />
         </div>
         <div className="fixed right-20 bottom-20">
           <button onClick={() => setOpen(true)} className="cursor-pointer">

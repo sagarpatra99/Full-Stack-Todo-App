@@ -1,7 +1,7 @@
 import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export const TaskBar = ({ to, head, para }) => {
+export const IncompleteTaskBar = ({ to, head, para }) => {
   return (
     <Link to={to}>
     <div className="flex items-center justify-between bg-white text-black py-2 px-5 rounded-md">

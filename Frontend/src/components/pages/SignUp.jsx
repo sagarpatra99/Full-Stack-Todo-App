@@ -5,7 +5,7 @@ import googleIcon from "../../assets/google-icon.png";
 import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { useState } from "react";
-import { auth_api } from "@/api/auth";
+import { auth_api } from "@/api/auth.api";
 import { toast } from "react-toastify";
 
 export const SignUp = () => {
