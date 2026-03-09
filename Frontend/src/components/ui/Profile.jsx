@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 export const Profile = ({user}) => {
   
   return (
-    <div className="w-full flex items-center justify-between">
+    <div className="w-full flex items-center justify-between mb-5">
       <div className="flex items-center gap-4">
-        <img src={user?.profileImg} alt="" className="h-30 w-30 rounded-full object-cover" />
+        <div className="h-30 w-30 bg-white rounded-full flex items-center justify-center">
+        <img src={user?.profileImg} alt="" className=" h-24 w-24 object-cover" />
+        </div>
         <div>
           <h5 className="text-3xl">{user?.fullName}</h5>
           <p className="text-xl opacity-50">{user?.email}</p>

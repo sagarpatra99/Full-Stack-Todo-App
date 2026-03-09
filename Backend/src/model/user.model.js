@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     profileImg: {
       type: String,
       default:
-        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8cHJvZmlsZXxlbnwwfHwwfHx8MA%3D%3D",
+        "https://imgs.search.brave.com/iqNtMFzPA0AyX1v_QsZwP7kzbrY1HPH4uaWwJl0h1rI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly90My5m/dGNkbi5uZXQvanBn/LzA1LzYwLzI2LzA4/LzM2MF9GXzU2MDI2/MDg4MF9PMVYzUW0y/Y05PNUhXak42Nm1C/aDJOcmxQSE5IT1V4/Vy5qcGc",
     },
   },
   { timestamps: true },

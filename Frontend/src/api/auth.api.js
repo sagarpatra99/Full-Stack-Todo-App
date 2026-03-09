@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const auth_api = axios.create({
-  baseURL: "http://localhost:3000/api/auth",
+  baseURL: "https://full-stack-todo-app-3v4h.onrender.com/api/auth",
   withCredentials: true,
 });
 
