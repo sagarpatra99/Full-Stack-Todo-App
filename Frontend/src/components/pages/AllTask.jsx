@@ -5,6 +5,7 @@ import { CreateTask } from "./CreateTask";
 // import { task_api } from "@/api/task.api";
 import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
+import { H4 } from "../common/H4";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
@@ -29,24 +30,24 @@ export const AllTask = () => {
   return (
     <>
       <div
-        className={`min-h-screen relative w-full px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white ${open ? "blur-[2px]" : ""}`}
+        className={`min-h-screen relative w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white ${open ? "blur-[2px]" : ""}`}
       >
-        <nav className="flex items-center justify-between">
+        <nav className="flex items-center justify-between mb-4 sm:mb-0">
           <div className="bg-[#103462] w-fit py-2 px-4 rounded-md flex items-center">
             <input
               type="text"
               placeholder="Search by task title..."
-              className="outline-none w-72"
+              className="outline-none w-40 sm:w-72 text-sm"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <Search className="text-[#8597AF]" />
+            <Search className="text-[#8597AF] h-5 w-5" />
           </div>
-          <div className="py-2 pl-4 rounded-md bg-[#103462]">
+          <div className="py-1.5 sm:py-2 px-2 sm:pl-4 w-20 rounded-md bg-[#103462]">
             <select
               name=""
               id=""
-              className="mr-3 outline-none text-[#8597AF] font-semibold cursor-pointer"
+              className="mr-3 w-full outline-none text-[#8597AF] font-semibold cursor-pointer"
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
             >
@@ -56,10 +57,10 @@ export const AllTask = () => {
             </select>
           </div>
         </nav>
-        <h4 className="tracking-wider text-4xl py-8">Tasks Lists</h4>
+        <H4 h="Tasks List" />
         <div className="flex flex-col gap-6">
           {filteredTasks.length === 0 ? (
-            <h2>No tasks found</h2>
+            <h2 className="text-sm sm:text-lg">No tasks found</h2>
           ) : (
             filteredTasks.map((task) => {
               return (
@@ -74,9 +75,9 @@ export const AllTask = () => {
             })
           )}
         </div>
-        <div className="fixed right-20 bottom-20">
+        <div className="fixed right-10 bottom-10 sm:right-20 sm:bottom-20">
           <button onClick={() => setOpen(true)} className="cursor-pointer">
-            <Plus size={60} className="bg-[#63D9F3] rounded-full p-1" />
+            <Plus className="bg-[#63D9F3] rounded-full h-10 w-10 p-1" />
           </button>
         </div>
       </div>

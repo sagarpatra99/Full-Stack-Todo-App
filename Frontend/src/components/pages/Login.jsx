@@ -11,10 +11,12 @@ import { toast } from "react-toastify";
 export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
+      setLoading(true)
       const response = await auth_api.post("/login", {
         email,
         password,
@@ -26,19 +28,23 @@ export const Login = () => {
     } catch (error) {
       // console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
   return (
-    <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center justify-center text-white">
-      <div className="w-[50%] px-48 bg-purple-400k text-center space-y-6">
+    <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex sm:flex-row flex-col items-center justify-center text-white">
+      <div className="w-full sm:w-[50%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-48 bg-purple-400k text-center space-y-6">
         <div className="bg-white mx-auto w-fit p-4 rounded-full cursor-pointer shadow-2xl hover:shadow-lg duration-300 shadow-gray-200">
           <Check size={30} className="text-[#08315A]" />
         </div>
         <div className="text-start space-y-2">
-          <h2 className="text-4xl">
+          <h2 className="3xs:text-2xl xs:text-3xl 2xl:text-4xl">
             Welcome Back to <span className="headingFont">DO IT</span>
           </h2>
-          <p className="text-xl">Have an other productive day !</p>
+          <p className="text-xl 3xs:text-base 2xs:text-lg">
+            Have an other productive day !
+          </p>
         </div>
         <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
           <Mail className="text-black" />
@@ -66,7 +72,10 @@ export const Login = () => {
             variant="ghost"
           />
         </div>
-        <Button onClick={handleSubmit} text={"Sign In"} />
+        <Button
+          onClick={handleSubmit}
+          text={`${loading ? "Signing" : "Sign In"}`}
+        />
         <p className="flex items-center justify-center gap-2">
           Don’t have an account?
           <Button to="/signup" text={"Sign Up"} variant="ghost" />
@@ -81,7 +90,7 @@ export const Login = () => {
           </Link>
         </div>
       </div>
-      <div className="w-[50%] pl-36">
+      <div className="hidden sm:block sm:w-[50%] pl-36">
         <img src={loginDesktop} alt="" className="rounded-lg" />
       </div>
     </div>

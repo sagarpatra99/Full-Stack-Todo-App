@@ -6,35 +6,36 @@ import { IncompleteTaskBar } from "../ui/IncompleteTaskBar";
 import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { Loading } from "../common/Loading";
+import { H4 } from "../common/H4";
 
 export const Home = () => {
   const { user, pendingTasks, completedTasks, loading } = useHomeData();
 
   if (loading) return <Loading />;
   return (
-    <div className="min-h-screen w-full px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
+    <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <Profile user={user} />
       <div className="space-y-6">
         <div>
-          <h4 className="tracking-wider text-4xl pb-6">Group Tasks</h4>
-          <div className="py-">
+          <H4 h="Group Tasks" />
+          <div className="">
             <Link to={"/alltask"}>
-              <div className="py-10 px-8 rounded-md flex items-center gap-4 bg-[#0a3058] w-fit text-gray-200">
-                <Plus size={30} /> <span className="text-2xl">Add Task</span>
+              <div className="py-6 sm:py-10 px-4 sm:px-8 rounded-md flex items-center gap-2 sm:gap-4 bg-[#0a3058] w-fit text-gray-200">
+                <Plus /> <span className="sm:text-2xl">Add Task</span>
               </div>
             </Link>
           </div>
         </div>
         <div className="">
           <div className="flex items-center justify-between">
-            <h4 className="tracking-wider text-4xl pb-6">Incomplete Tasks</h4>
-            <Link to={"/alltask"} className="hover:text-blue-500 pb-4">
-              View All Tasks
+            <H4 h={"Incomplete Tasks"} />
+            <Link to={"/alltask"} className="hover:text-blue-500 pb-4 text-sm">
+              View All
             </Link>
           </div>
           <div className="flex flex-col gap-6">
             {pendingTasks.length === 0 ? (
-              <h2 className="text-lg">No Pending Tasks Founds</h2>
+              <h2 className="text-sm sm:text-lg">No Pending Tasks Founds</h2>
             ) : (
               pendingTasks.map((pendingTask) => {
                 return (
@@ -50,10 +51,10 @@ export const Home = () => {
           </div>
         </div>
         <div>
-          <h4 className="tracking-wider text-4xl pb-6">Completed Tasks</h4>
+          <H4 h="Completed Tasks" />
           <div className="flex flex-col gap-6">
             {completedTasks.length === 0 ? (
-              <h2 className="text-lg">No Completed Tasks Founds</h2>
+              <h2 className="text-sm sm:text-lg">No Completed Tasks Found</h2>
             ) : (
               completedTasks.map((completedTask) => {
                 return (
