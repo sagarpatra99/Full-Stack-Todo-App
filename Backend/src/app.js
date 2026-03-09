@@ -5,7 +5,7 @@ const cors = require("cors");
 
 app.use(
   cors({
-    origin: "https://todo-app-sagar.vercel.app/",
+    origin: ["http://localhost:5173", "https://todo-app-sagar.vercel.app"],
     credentials: true,
   }),
 );
