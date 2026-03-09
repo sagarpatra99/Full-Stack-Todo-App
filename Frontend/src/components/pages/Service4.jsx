@@ -6,7 +6,7 @@ export const Service4 = () => {
   const params = useLocation();
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center flex-col justify-between py-25 text-white">
+    <div className="min-h-screen bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center flex-col gap-20 justify-center sm:justify-between py-25 text-white">
       <img src={service4Img} alt="" />
       <p className="text-lg">You informations are secure with us</p>
       <div className="flex items-center gap-20">

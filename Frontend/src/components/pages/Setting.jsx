@@ -7,18 +7,21 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "../common/Button";
+import { H4 } from "../common/H4";
 
 export const Setting = () => {
   return (
-    <div className="min-h-screen w-full relative px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
+    <div className="min-h-screen w-full relative px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <div className="flex items-center gap-6 bg-purple-500s mb-10">
-        <Link to="/home">
-          <ChevronLeft size={50} className="pt-1" />
+        <Link to="/home" className="-translate-y-2">
+          <ChevronLeft className="sm:pt-1" />
         </Link>
-        <h4 className="tracking-wider text-4xl text-center w-full">Settings</h4>
+        <div className="text-center w-full">
+          <H4 h="Settings" />
+        </div>
       </div>
       {/* Accordion code */}
-      <Accordion type="single" collapsible defaultValue="item-1">
+      <Accordion type="single" collapsible defaultValue="">
         <AccordionItem value="item-1">
           <AccordionTrigger
             className={`text-xl hover:no-underline cursor-pointer [&>svg]:h-8 [&>svg]:w-8`}

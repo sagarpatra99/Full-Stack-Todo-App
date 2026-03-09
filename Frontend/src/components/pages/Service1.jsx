@@ -6,7 +6,7 @@ export const Service1 = () => {
   const params = useLocation();
 
   return (
-    <div className="min-h-screen bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center flex-col justify-between py-25 text-white">
+    <div className="min-h-screen bg-linear-to-b from-[#1251A6] to-[#062949] flex items-center flex-col gap-20 justify-center sm:justify-between py-25 text-white">
       <img src={service1Img} alt="" />
       <p className="text-lg">
         Plan your tasks to do, that way you’ll stay organized and you won’t skip
