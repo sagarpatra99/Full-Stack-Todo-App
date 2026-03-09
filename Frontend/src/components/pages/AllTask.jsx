@@ -3,32 +3,33 @@ import { TaskBar } from "../ui/TaskBar";
 import { useEffect, useState } from "react";
 import { CreateTask } from "./CreateTask";
 import { task_api } from "@/api/task.api";
+import { formatDate } from "@/utils/formatDate";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
   const [allTasks, setAllTasks] = useState([]);
-  const [searchText, setSearchText] = useState("")
+  const [searchText, setSearchText] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
 
   useEffect(() => {
     const getAllTasks = async () => {
       const res_tasks = await task_api.get("/");
       setAllTasks(res_tasks.data.tasks);
-      // console.log("All Tasks", res_tasks.data.tasks);
     };
 
     getAllTasks();
-  }, []);
+  }, [open]);
 
   const filteredTasks = allTasks.filter((task) => {
-  const matchStatus =
-    selectedStatus === "all" || task.status === selectedStatus;
+    const matchStatus =
+      selectedStatus === "all" || task.status === selectedStatus;
 
-  const matchSearch =
-    task.title.toLowerCase().includes(searchText.toLowerCase());
+    const matchSearch = task.title
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
 
-  return matchStatus && matchSearch;
-});
+    return matchStatus && matchSearch;
+  });
 
   return (
     <>
@@ -67,15 +68,17 @@ export const AllTask = () => {
           {allTasks.length === 0 ? (
             <h2>No tasks founds</h2>
           ) : (
-            filteredTasks.map((task) => (
-              <TaskBar
-                key={task._id}
-                to="/details"
-                head={task.title}
-                para={task.dueDate}
-                status={task.status}
-              />
-            ))
+            filteredTasks.map((task) => {
+              return (
+                <TaskBar
+                  key={task._id}
+                  to="/details"
+                  head={task.title}
+                  dueDate={formatDate(task.dueDate)}
+                  status={task.status}
+                />
+              );
+            })
           )}
         </div>
         <div className="fixed right-20 bottom-20">

@@ -1,6 +1,26 @@
-import { CalendarDays, Clock9, TextAlignCenter, Type } from "lucide-react";
+import { task_api } from "@/api/task.api";
+import { TextAlignCenter, Type } from "lucide-react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export const CreateTask = ({ open, setOpen }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [date, setDate] = useState("");
+  const [time, setTime] = useState("");
+
+  const dueDate = new Date(`${date}T${time}`);
+
+  const handleCreateTask = async () => {
+    try {
+      await task_api.post("/", { title, description, dueDate });
+      toast.success("Task created successfully");
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Something went wrong");
+      console.error(error.message || error);
+    }
+  };
+
   return (
     <div className="">
       {/* Overlay */}
@@ -25,6 +45,7 @@ export const CreateTask = ({ open, setOpen }) => {
               type="text"
               placeholder="Task Title"
               className="outline-none text-xl"
+              onChange={(e) => setTitle(e.target.value)}
             />
           </div>
 
@@ -33,17 +54,29 @@ export const CreateTask = ({ open, setOpen }) => {
             <textarea
               placeholder="Description"
               className="outline-none h-68 overflow-y-auto text-lg w-full"
+              onChange={(e) => setDescription(e.target.value)}
             />
           </div>
 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <input type="date" className="outline-none p-3.5 rounded bg-[#05243E] text-white" />
-              <input type="time" className="outline-none p-3.5 rounded bg-[#05243E] text-white" />
+              <input
+                type="date"
+                className="outline-none p-3.5 rounded bg-[#05243E] text-white"
+                onChange={(e) => setDate(e.target.value)}
+              />
+              <input
+                type="time"
+                className="outline-none p-3.5 rounded bg-[#05243E] text-white"
+                onChange={(e) => setTime(e.target.value)}
+              />
             </div>
             <button
               className="bg-[#0EA5E9] text-white text-xl px-4 py-2 rounded cursor-pointer"
-              onClick={() => setOpen(false)}
+              onClick={async () => {
+                await handleCreateTask();
+                setOpen(false);
+              }}
             >
               Create
             </button>
