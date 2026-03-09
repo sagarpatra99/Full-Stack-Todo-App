@@ -1,4 +1,5 @@
-import { Bell } from "lucide-react";
+import { Bell, Settings } from "lucide-react";
+import { Link } from "react-router-dom";
 // import profileImg from "../../assets/profileImg.jpg";
 
 export const Profile = ({user}) => {
@@ -12,7 +13,12 @@ export const Profile = ({user}) => {
           <p className="text-xl opacity-50">{user?.email}</p>
         </div>
       </div>
-      <Bell size={40} fill="white" />
+      <div className="flex items-center gap-6">
+      {/* <Bell size={40} fill="white" /> */}
+      <Link to={"/setting"}>
+        <Settings size={40} className="cursor-pointer" />
+      </Link>
+      </div>
     </div>
   );
 };

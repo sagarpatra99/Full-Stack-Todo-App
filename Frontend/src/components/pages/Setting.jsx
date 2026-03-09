@@ -12,7 +12,7 @@ export const Setting = () => {
   return (
     <div className="min-h-screen w-full relative px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <div className="flex items-center gap-6 bg-purple-500s mb-10">
-        <Link to="/alltask">
+        <Link to="/home">
           <ChevronLeft size={50} className="pt-1" />
         </Link>
         <h4 className="tracking-wider text-4xl text-center w-full">Settings</h4>

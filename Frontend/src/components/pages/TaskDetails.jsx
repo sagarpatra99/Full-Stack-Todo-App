@@ -27,6 +27,11 @@ export const TaskDetails = () => {
     fetchTask();
   }, [taskId]);
 
+  const handleDeleteTask = async () => {
+    await task_api.delete(`/${taskId}`);
+    navigate(-1);
+  };
+
   if (!task) return <Loading />;
 
   return (
@@ -60,12 +65,17 @@ export const TaskDetails = () => {
       </div>
       <div className="h-0.5 bg-gray-400 opacity-50 my-6"></div>
       <p className="text-xl max-h-80 overflow-y-auto">{task.description}</p>
-      <div className="flex items-center justify-center gap-16 absolute bottom-10 translate-x-[90%]">
-        <div className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2">
-          <Check className="bg-green-500 rounded-full" />
-          <h5 className="font-semibold">Done</h5>
-        </div>
-        <div className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2">
+      <div className="flex items-center justify-center gap-16 absolute bottom-10 left-1/2 -translate-x-1/2P">
+        {task.status === "pending" && (
+          <div className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2">
+            <Check className="bg-green-500 rounded-full" />
+            <h5 className="font-semibold">Done</h5>
+          </div>
+        )}
+        <div
+          className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2 cursor-pointer"
+          onClick={handleDeleteTask}
+        >
           <Trash2 className="text-red-500 rounded-full" />
           <h5 className="font-semibold">Delete</h5>
         </div>
