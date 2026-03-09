@@ -40,7 +40,7 @@ export const Home = () => {
                 return (
                   <IncompleteTaskBar
                     key={pendingTask._id}
-                    to="/details"
+                    to={`/task/${pendingTask._id}`}
                     head={pendingTask.title}
                     dueDate={formatDate(pendingTask.dueDate)}
                   />
@@ -59,7 +59,7 @@ export const Home = () => {
                 return (
                   <CompletedTaskBar
                     key={completedTask._id}
-                    to="/details"
+                    to={`/task/${completedTask._id}`}
                     head={completedTask.title}
                     dueDate={formatDate(completedTask.dueDate)}
                   />

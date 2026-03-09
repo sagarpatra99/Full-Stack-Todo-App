@@ -65,11 +65,9 @@ const controllerGetTask = async (req, res) => {
 
     // const skip = (page - 1) * limit;
 
-    const tasks = await taskModel
-      .find(filter)
-      .sort({ createdAt: -1 })
-      // .skip(skip)
-      // .limit(Number(limit));
+    const tasks = await taskModel.find(filter).sort({ createdAt: -1 });
+    // .skip(skip)
+    // .limit(Number(limit));
 
     res.status(200).json({
       success: true,
@@ -121,9 +119,37 @@ const controllerUpdateTask = async (req, res) => {
   }
 };
 
+const controllerGetTaskById = async (req, res) => {
+  try {
+    const { taskId } = req.params;
+
+    const task = await taskModel.findOne({
+      _id: taskId,
+      user: req.user.id,
+    });
+
+    if (!task)
+      return res.status(404).json({
+        sucess: false,
+        message: "Task not found",
+      });
+
+    res.status(200).json({
+      sucess: true,
+      task,
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went wrong",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   controllerCreateTask,
   controllerDeleteTask,
   controllerGetTask,
   controllerUpdateTask,
+  controllerGetTaskById,
 };

@@ -61,7 +61,7 @@ export const appRouter = createBrowserRouter([
         element: <AllTask />,
       },
       {
-        path: "details",
+        path: "task/:taskId",
         element: <TaskDetails />,
       },
       {

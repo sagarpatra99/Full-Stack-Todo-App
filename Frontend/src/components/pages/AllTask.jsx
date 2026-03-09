@@ -65,7 +65,7 @@ export const AllTask = () => {
               return (
                 <TaskBar
                   key={task._id}
-                  to="/details"
+                  to={`/task/${task._id}`}
                   head={task.title}
                   dueDate={formatDate(task.dueDate)}
                   status={task.status}
