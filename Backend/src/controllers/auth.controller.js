@@ -26,7 +26,12 @@ const controllerRegister = async (req, res) => {
     process.env.JWT_SECRET,
   );
 
-  res.cookie("token", token);
+  // res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
 
   res.status(201).json({
     message: "User Registered Successfully",
@@ -58,9 +63,14 @@ const controllerLogin = async (req, res) => {
     { expiresIn: "1h" },
   );
 
-  res.cookie("token", token);
+  // res.cookie("token", token);
+  res.cookie("token", token, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
 
-  res.status(201).json({
+  res.status(200).json({
     message: "User Login Successfully",
     user: {
       id: isValidUser._id,
@@ -76,7 +86,7 @@ const controllerGetMe = async (req, res) => {
 
   const user = await userModel.findById(userId);
 
-  res.status(201).json({
+  res.status(200).json({
     message: "User details fetched Successfully",
     user: {
       fullName: user.fullname,
