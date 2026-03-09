@@ -55,7 +55,7 @@ const controllerDeleteTask = async (req, res) => {
 const controllerGetTask = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { status, page = 1, limit = 5 } = req.query;
+    const { status } = req.query;
 
     const filter = { user: userId };
 
@@ -63,19 +63,19 @@ const controllerGetTask = async (req, res) => {
       filter.status = status;
     }
 
-    const skip = (page - 1) * limit;
+    // const skip = (page - 1) * limit;
 
     const tasks = await taskModel
       .find(filter)
       .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(Number(limit));
+      // .skip(skip)
+      // .limit(Number(limit));
 
     res.status(200).json({
       success: true,
       message: "Tasks fetched Successfully.",
-      page: Number(page),
-      limit: Number(limit),
+      // page: Number(page),
+      // limit: Number(limit),
       tasks,
     });
   } catch (error) {

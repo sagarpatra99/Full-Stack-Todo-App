@@ -1,24 +1,19 @@
 import { Plus, Search } from "lucide-react";
 import { TaskBar } from "../ui/TaskBar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CreateTask } from "./CreateTask";
-import { task_api } from "@/api/task.api";
+// import { task_api } from "@/api/task.api";
 import { formatDate } from "@/utils/formatDate";
+import { useHomeData } from "@/hooks/useHomeData";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
-  const [allTasks, setAllTasks] = useState([]);
+  // const [allTasks, setAllTasks] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
 
-  useEffect(() => {
-    const getAllTasks = async () => {
-      const res_tasks = await task_api.get("/");
-      setAllTasks(res_tasks.data.tasks);
-    };
-
-    getAllTasks();
-  }, [open]);
+  const { allTasks, refetchTasks } = useHomeData();
+  // useEffect(() => {}, [allTasks]);
 
   const filteredTasks = allTasks.filter((task) => {
     const matchStatus =
@@ -42,6 +37,7 @@ export const AllTask = () => {
               type="text"
               placeholder="Search by task title..."
               className="outline-none w-72"
+              value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
             <Search className="text-[#8597AF]" />
@@ -51,11 +47,8 @@ export const AllTask = () => {
               name=""
               id=""
               className="mr-3 outline-none text-[#8597AF] font-semibold cursor-pointer"
-              onChange={(e) => {
-                const value = e.target.value;
-                setSelectedStatus(value);
-                console.log(value);
-              }}
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
             >
               <option value="all">All</option>
               <option value="pending">Pending</option>
@@ -65,8 +58,8 @@ export const AllTask = () => {
         </nav>
         <h4 className="tracking-wider text-4xl py-8">Tasks Lists</h4>
         <div className="flex flex-col gap-6">
-          {allTasks.length === 0 ? (
-            <h2>No tasks founds</h2>
+          {filteredTasks.length === 0 ? (
+            <h2>No tasks found</h2>
           ) : (
             filteredTasks.map((task) => {
               return (
@@ -87,7 +80,7 @@ export const AllTask = () => {
           </button>
         </div>
       </div>
-      <CreateTask open={open} setOpen={setOpen} />
+      <CreateTask open={open} setOpen={setOpen} refetchTasks={refetchTasks} />
     </>
   );
 };

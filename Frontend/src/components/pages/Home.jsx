@@ -1,39 +1,16 @@
 import { Plus } from "lucide-react";
 import { Profile } from "../ui/Profile";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
-import { auth_api } from "@/api/auth.api";
-import { useEffect, useState } from "react";
 import { CompletedTaskBar } from "../ui/CompletedTaskBar";
 import { IncompleteTaskBar } from "../ui/IncompleteTaskBar";
-import { task_api } from "@/api/task.api";
 import { formatDate } from "@/utils/formatDate";
+import { useHomeData } from "@/hooks/useHomeData";
+import { Loading } from "../common/Loading";
 
 export const Home = () => {
-  const [user, setUser] = useState(null);
-  const [pendingTasks, setPendingTasks] = useState([]);
-  const [completedTasks, setCompletedTasks] = useState([]);
-  useEffect(() => {
-    const getMe = async () => {
-      try {
-        const res_get = await auth_api.get("/get-me");
-        setUser(res_get.data.user);
-        const res_pending = await task_api.get("", {
-          params: { status: "pending" },
-        });
-        setPendingTasks(res_pending.data.tasks);
-        const res_completed = await task_api.get("", {
-          params: { status: "completed" },
-        });
-        setCompletedTasks(res_completed.data.tasks);
-      } catch (error) {
-        console.log(error);
-        toast.error(error.response?.data?.message || "Something went wrong");
-      }
-    };
+  const { user, pendingTasks, completedTasks, loading } = useHomeData();
 
-    getMe();
-  }, []);
+  if (loading) return <Loading />;
   return (
     <div className="min-h-screen w-full px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <Profile user={user} />

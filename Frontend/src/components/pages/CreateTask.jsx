@@ -3,7 +3,7 @@ import { TextAlignCenter, Type } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-export const CreateTask = ({ open, setOpen }) => {
+export const CreateTask = ({ open, setOpen, refetchTasks }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [date, setDate] = useState("");
@@ -14,6 +14,7 @@ export const CreateTask = ({ open, setOpen }) => {
   const handleCreateTask = async () => {
     try {
       await task_api.post("/", { title, description, dueDate });
+      await refetchTasks();
       toast.success("Task created successfully");
     } catch (error) {
       toast.error(error.response?.data?.message || "Something went wrong");
