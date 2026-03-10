@@ -1,6 +1,7 @@
 const userModel = require("../model/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const blacklistModel = require("../model/blacklist.model");
 
 const controllerRegister = async (req, res) => {
   try {
@@ -122,4 +123,16 @@ const controllerGetMe = async (req, res) => {
   }
 };
 
-module.exports = { controllerRegister, controllerLogin, controllerGetMe };
+const controllerLogoutUser = async (req, res) => {
+  const token = req.cookies.token;
+
+  res.clearCookie("token");
+
+  await blacklistModel.create({ token });
+
+  res.status(201).json({
+    message: "User Logout Successfully",
+  });
+};
+
+module.exports = { controllerRegister, controllerLogin, controllerGetMe, controllerLogoutUser };
