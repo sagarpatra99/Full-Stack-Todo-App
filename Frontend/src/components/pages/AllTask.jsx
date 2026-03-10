@@ -2,19 +2,17 @@ import { Plus, Search } from "lucide-react";
 import { TaskBar } from "../ui/TaskBar";
 import { useState } from "react";
 import { CreateTask } from "./CreateTask";
-// import { task_api } from "@/api/task.api";
 import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { H4 } from "../common/H4";
+import { Navbar } from "../ui/Navbar";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
-  // const [allTasks, setAllTasks] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
 
   const { allTasks, refetchTasks } = useHomeData();
-  // useEffect(() => {}, [allTasks]);
 
   const filteredTasks = allTasks.filter((task) => {
     const matchStatus =
@@ -75,13 +73,14 @@ export const AllTask = () => {
             })
           )}
         </div>
-        <div className="fixed right-10 bottom-10 sm:right-20 sm:bottom-20">
+        <div className="fixed right-10 bottom-20 sm:right-20 sm:bottom-20">
           <button onClick={() => setOpen(true)} className="cursor-pointer">
             <Plus className="bg-[#63D9F3] rounded-full h-10 w-10 p-1" />
           </button>
         </div>
       </div>
       <CreateTask open={open} setOpen={setOpen} refetchTasks={refetchTasks} />
+      <Navbar />
     </>
   );
 };

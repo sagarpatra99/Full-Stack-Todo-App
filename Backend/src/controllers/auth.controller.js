@@ -124,15 +124,33 @@ const controllerGetMe = async (req, res) => {
 };
 
 const controllerLogoutUser = async (req, res) => {
-  const token = req.cookies.token;
+  try {
+    const token = req.cookies.token;
+    
+    if (token) {
+      await blacklistModel.create({ token });
+    }
 
-  res.clearCookie("token");
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
 
-  await blacklistModel.create({ token });
-
-  res.status(201).json({
-    message: "User Logout Successfully",
-  });
+    res.status(200).json({
+      message: "User logout successfully",
+    });
+  } catch (error) {
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
+  }
 };
 
-module.exports = { controllerRegister, controllerLogin, controllerGetMe, controllerLogoutUser };
+module.exports = {
+  controllerRegister,
+  controllerLogin,
+  controllerGetMe,
+  controllerLogoutUser,
+};

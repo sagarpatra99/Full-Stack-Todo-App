@@ -7,6 +7,7 @@ import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { Loading } from "../common/Loading";
 import { H4 } from "../common/H4";
+import { Navbar } from "../ui/Navbar";
 
 export const Home = () => {
   const { user, pendingTasks, completedTasks, loading } = useHomeData();
@@ -15,7 +16,7 @@ export const Home = () => {
   return (
     <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <Profile user={user} />
-      <div className="space-y-6">
+      <div className="space-y-3 sm:space-y-6">
         <div>
           <H4 h="Group Tasks" className="" />
           <div className="">
@@ -28,14 +29,14 @@ export const Home = () => {
         </div>
         <div className="">
           <div className="flex items-center justify-between">
-            <H4 h={"Incomplete Tasks"} />
+            <H4 h={"Incomplete Tasks"} className="pb-" />
             <Link to={"/alltask"} className="hover:text-blue-500 pb-4 text-sm">
               View All
             </Link>
           </div>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4 sm:gap-6 max-h-40 overflow-y-auto">
             {pendingTasks.length === 0 ? (
-              <h2 className="text-sm sm:text-lg">No Pending Tasks Founds</h2>
+              <h2 className="text-sm sm:text-lg">No Pending Tasks Found</h2>
             ) : (
               pendingTasks.map((pendingTask) => {
                 return (
@@ -70,6 +71,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <Navbar />
     </div>
   );
 };

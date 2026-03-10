@@ -13,6 +13,7 @@ import { Home } from "./components/pages/Home.jsx";
 import { AllTask } from "./components/pages/AllTask.jsx";
 import { TaskDetails } from "./components/pages/TaskDetails.jsx";
 import { Setting } from "./components/pages/Setting.jsx";
+import { Calendar } from "./components/pages/Calendar.jsx";
 
 export const appRouter = createBrowserRouter([
   {
@@ -67,6 +68,10 @@ export const appRouter = createBrowserRouter([
       {
         path: "setting",
         element: <Setting />,
+      },
+      {
+        path: "/calendar",
+        element: <Calendar />,
       },
     ],
   },

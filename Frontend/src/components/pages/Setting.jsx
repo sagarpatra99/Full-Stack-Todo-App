@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/accordion";
 import { Button } from "../common/Button";
 import { TitleBar } from "../ui/TitleBar";
+import { Navbar } from "../ui/Navbar";
 
 export const Setting = () => {
   return (
@@ -64,6 +65,7 @@ export const Setting = () => {
         <LogOut />
         Logout
       </Button>
+      <Navbar />
     </div>
   );
 };

@@ -6,6 +6,6 @@ const identifyUser = require("../middlewares/auth.middleware");
 authRoutes.post("/register", controller.controllerRegister);
 authRoutes.post("/login", controller.controllerLogin);
 authRoutes.get("/get-me", identifyUser, controller.controllerGetMe);
-authRoutes.get("/logout", identifyUser, controller.controllerLogoutUser);
+authRoutes.post("/logout", identifyUser, controller.controllerLogoutUser);
 
 module.exports = authRoutes;

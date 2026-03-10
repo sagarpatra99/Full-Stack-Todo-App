@@ -1,14 +1,5 @@
 import { task_api } from "@/api/task.api";
-import {
-  CalendarDays,
-  Check,
-  ChevronLeft,
-  Clock,
-  Edit,
-  Pi,
-  Pin,
-  Trash2,
-} from "lucide-react";
+import { CalendarDays, Check, Clock, Edit, Pin, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../common/Loading";
@@ -43,7 +34,7 @@ export const TaskDetails = () => {
       <TitleBar t="Tasks Details" />
       <div className="space-y-2">
         <div className="flex items-center gap-4 mt-4">
-          <H4 h={task.title} className="pb-0"/>
+          <H4 h={task.title} className="pb-0" />
           <Link to="">
             <Edit className="pt-1" />
           </Link>
@@ -58,7 +49,7 @@ export const TaskDetails = () => {
       </div>
       <div className="h-0.5 bg-gray-400 opacity-50 my-6"></div>
       <p className="sm:text-xl max-h-80 overflow-y-auto">{task.description}</p>
-      <div className="flex items-center justify-center gap-6 sm:gap-16 absolute bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2">
+      <div className="flex items-center justify-center gap-6 sm:gap-16 absolute bottom-12 sm:bottom-10 left-1/2 -translate-x-1/2">
         {task.status === "pending" && (
           <DetailsBtn icon={Check} text="Done" className="bg-green-500" />
         )}
@@ -70,7 +61,7 @@ export const TaskDetails = () => {
         />
         <DetailsBtn
           icon={Pin}
-          text={"Delete"}
+          text={"Pin"}
           className="text-amber-500 rotate-45"
           fn={handleDeleteTask}
         />
