@@ -13,11 +13,22 @@ export const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    const newErrors = {};
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await auth_api.post("/login", {
         email,
         password,
@@ -44,19 +55,33 @@ export const Login = () => {
             Have an other productive day !
           </p>
         </div>
+        {errors.email && (
+          <p className="text-red-500 text-sm text-start mb-1">{errors.email}</p>
+        )}
         <InputField
           icon={Mail}
           type="email"
           placeholder={"Email address"}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrors((prev) => ({ ...prev, email: "" }));
+          }}
         />
         <div>
+          {errors.password && (
+            <p className="text-red-500 text-sm text-start mb-1">
+              {errors.password}
+            </p>
+          )}
           <InputField
             icon={Lock}
             type="password"
             placeholder={"Password"}
             eyeIcon
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setErrors((prev) => ({ ...prev, password: "" }));
+            }}
           />
           <Button
             to="/signup"

@@ -14,11 +14,23 @@ export const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
+    const newErrors = {};
+    if (!fullname) newErrors.fullname = "Fullname is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) newErrors.password = "Password is required";
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return;
+    }
+
+    setErrors({});
+    setLoading(true);
     try {
-      setLoading(true);
       const response = await auth_api.post("/register", {
         fullname,
         email,
@@ -45,26 +57,51 @@ export const SignUp = () => {
           </h2>
           <p className="text-xl">Create an account and Join us now!</p>
         </div>
+        {errors.fullname && (
+          <p className="text-red-500 text-sm text-start mb-1">
+            {errors.fullname}
+          </p>
+        )}
         <InputField
           icon={User}
           type="text"
           placeholder={"Enter full name"}
-          onChange={(e) => setFullname(e.target.value)}
+          onChange={(e) => {
+            setFullname(e.target.value);
+            setErrors((prev) => ({ ...prev, fullname: "" }));
+          }}
         />
+        {errors.email && (
+          <p className="text-red-500 text-sm text-start mb-1">{errors.email}</p>
+        )}
         <InputField
           icon={Mail}
           type="email"
           placeholder={"Enter email address"}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setErrors((prev) => ({ ...prev, email: "" }));
+          }}
         />
+        {errors.password && (
+          <p className="text-red-500 text-sm text-start mb-1">
+            {errors.password}
+          </p>
+        )}
         <InputField
           icon={Lock}
           type="password"
           placeholder={"Enter password"}
           eyeIcon
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setErrors((prev) => ({ ...prev, password: "" }));
+          }}
         />
-        <Button onClick={handleSubmit} text={`${loading ? "Signing Up" : "Sign Up"}`} />
+        <Button
+          onClick={handleSubmit}
+          text={`${loading ? "Signing Up" : "Sign Up"}`}
+        />
         <div className="flex items-center justify-center gap-2">
           Already have an account?
           <Button to="/login" text={"Sign In"} variant="ghost" />
