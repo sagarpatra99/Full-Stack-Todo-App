@@ -12,15 +12,14 @@ const identifyUser = async (req, res, next) => {
 
   try {
     decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+
+    next();
   } catch (error) {
     return res.status(401).json({
       message: "User not Authorized!",
     });
   }
-
-  req.user = decoded;
-
-  next();
 };
 
 module.exports = identifyUser;
