@@ -58,7 +58,7 @@ export const AllTask = () => {
           </div>
         </nav>
         <H4 h="Tasks List" />
-        <div className="flex flex-col gap-6">
+        <div className=" flex flex-col gap-6">
           {filteredTasks.length === 0 ? (
             <h2 className="text-sm sm:text-lg">No tasks found</h2>
           ) : (

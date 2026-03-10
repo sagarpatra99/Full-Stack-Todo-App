@@ -1,5 +1,4 @@
-import { ChevronLeft, LogOut } from "lucide-react";
-import { Link } from "react-router-dom";
+import { LogOut } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
@@ -7,19 +6,12 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Button } from "../common/Button";
-import { H4 } from "../common/H4";
+import { TitleBar } from "../ui/TitleBar";
 
 export const Setting = () => {
   return (
     <div className="min-h-screen w-full relative px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
-      <div className="flex items-center gap-6 bg-purple-500s mb-10">
-        <Link to="/home" className="-translate-y-2">
-          <ChevronLeft className="sm:pt-1" />
-        </Link>
-        <div className="text-center w-full">
-          <H4 h="Settings" />
-        </div>
-      </div>
+      <TitleBar t="Settings" />
       {/* Accordion code */}
       <Accordion type="single" collapsible defaultValue="">
         <AccordionItem value="item-1">

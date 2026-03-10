@@ -5,6 +5,7 @@ import {
   ChevronLeft,
   Clock,
   Edit,
+  Pi,
   Pin,
   Trash2,
 } from "lucide-react";
@@ -12,6 +13,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../common/Loading";
 import { formatTaskDay, formatTaskTime } from "@/utils/formatDate";
+import { DetailsBtn } from "../ui/DetailsBtn";
+import { H4 } from "../common/H4";
+import { TitleBar } from "../ui/TitleBar";
 
 export const TaskDetails = () => {
   const { taskId } = useParams();
@@ -35,54 +39,41 @@ export const TaskDetails = () => {
   if (!task) return <Loading />;
 
   return (
-    <div className="min-h-screen relative w-full px-40 py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
-      <div className="flex items-center gap-6 bg-purple-500s mb-10">
-        {/* <Link to="/setting"> */}
-        <ChevronLeft
-          size={50}
-          className="pt-1 cursor-pointer"
-          onClick={() => {
-            navigate(-1);
-          }}
-        />
-        {/* </Link> */}
-        <h4 className="tracking-wider text-4xl">Tasks Details</h4>
-      </div>
+    <div className="min-h-screen relative w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
+      <TitleBar t="Tasks Details" />
       <div className="space-y-2">
-        <div className="flex items-center gap-4">
-          <h2 className="text-2xl tracking-wide">{task.title}</h2>
+        <div className="flex items-center gap-4 mt-4">
+          <H4 h={task.title} className="pb-0"/>
           <Link to="">
             <Edit className="pt-1" />
           </Link>
         </div>
-        <div className="flex items-center gap-4">
-          <CalendarDays size={20} />
+        <div className="flex items-center gap-2 sm:gap-4 text-sm">
+          <CalendarDays className="h-4.5 w-4.5" />
           <span>{formatTaskDay(task.dueDate)}</span>
           <span>|</span>
-          <Clock size={20} />
+          <Clock className="h-4.5 w-4.5" />
           <span>{formatTaskTime(task.dueDate)}</span>
         </div>
       </div>
       <div className="h-0.5 bg-gray-400 opacity-50 my-6"></div>
-      <p className="text-xl max-h-80 overflow-y-auto">{task.description}</p>
-      <div className="flex items-center justify-center gap-16 absolute bottom-10 left-1/2 -translate-x-1/2P">
+      <p className="sm:text-xl max-h-80 overflow-y-auto">{task.description}</p>
+      <div className="flex items-center justify-center gap-6 sm:gap-16 absolute bottom-4 sm:bottom-10 left-1/2 -translate-x-1/2">
         {task.status === "pending" && (
-          <div className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2">
-            <Check className="bg-green-500 rounded-full" />
-            <h5 className="font-semibold">Done</h5>
-          </div>
+          <DetailsBtn icon={Check} text="Done" className="bg-green-500" />
         )}
-        <div
-          className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2 cursor-pointer"
-          onClick={handleDeleteTask}
-        >
-          <Trash2 className="text-red-500 rounded-full" />
-          <h5 className="font-semibold">Delete</h5>
-        </div>
-        <div className="bg-[#05243E] w-fit px-8 py-3 rounded-md flex flex-col items-center gap-2">
-          <Pin className="text-amber-500 rounded-full rotate-45" />
-          <h5 className="font-semibold">Pin</h5>
-        </div>
+        <DetailsBtn
+          icon={Trash2}
+          text={"Delete"}
+          className={"text-red-500"}
+          fn={handleDeleteTask}
+        />
+        <DetailsBtn
+          icon={Pin}
+          text={"Delete"}
+          className="text-amber-500 rotate-45"
+          fn={handleDeleteTask}
+        />
       </div>
     </div>
   );

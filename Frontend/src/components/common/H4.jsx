@@ -1,3 +1,5 @@
-export const H4 = ({h}) => {
-    return <h4 className="tracking-wider text-2xl sm:text-4xl pb-6">{h}</h4>
+import { cn } from "@/lib/utils"
+
+export const H4 = ({h, className}) => {
+    return <h4 className={cn(`tracking-wider text-xl sm:text-4xl pb-4 sm:pb-6`, className)}>{h}</h4>
 }

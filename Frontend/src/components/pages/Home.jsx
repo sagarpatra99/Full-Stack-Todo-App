@@ -17,7 +17,7 @@ export const Home = () => {
       <Profile user={user} />
       <div className="space-y-6">
         <div>
-          <H4 h="Group Tasks" />
+          <H4 h="Group Tasks" className="" />
           <div className="">
             <Link to={"/alltask"}>
               <div className="py-6 sm:py-10 px-4 sm:px-8 rounded-md flex items-center gap-2 sm:gap-4 bg-[#0a3058] w-fit text-gray-200">
