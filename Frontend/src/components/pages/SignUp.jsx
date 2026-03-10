@@ -7,27 +7,29 @@ import { Button } from "../common/Button";
 import { useState } from "react";
 import { auth_api } from "@/api/auth.api";
 import { toast } from "react-toastify";
+import InputField from "../common/InputField";
 
 export const SignUp = () => {
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async () => {
     try {
+      setLoading(true);
       const response = await auth_api.post("/register", {
         fullname,
         email,
         password,
       });
-      // console.log(response.data);
       toast.success(response.data.message);
-
       navigate("/login");
     } catch (error) {
-      // console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -43,38 +45,30 @@ export const SignUp = () => {
           </h2>
           <p className="text-xl">Create an account and Join us now!</p>
         </div>
-        <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
-          <User className="text-black" />
-          <input
-            type="text"
-            placeholder="Full Name"
-            className="outline-none text-black tracking-wider"
-            onChange={(e) => setFullname(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
-          <Mail className="text-black" />
-          <input
-            type="email"
-            placeholder="E-mail"
-            className="outline-none text-black tracking-wider"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
-          <Lock className="text-black" />
-          <input
-            type="password"
-            placeholder="Password"
-            className="outline-none text-black tracking-wider"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <Button onClick={handleSubmit} text={"Sign Up"} />
-        <p className="flex items-center justify-center gap-2">
+        <InputField
+          icon={User}
+          type="text"
+          placeholder={"Enter full name"}
+          onChange={(e) => setFullname(e.target.value)}
+        />
+        <InputField
+          icon={Mail}
+          type="email"
+          placeholder={"Enter email address"}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <InputField
+          icon={Lock}
+          type="password"
+          placeholder={"Enter password"}
+          eyeIcon
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <Button onClick={handleSubmit} text={`${loading ? "Signing Up" : "Sign Up"}`} />
+        <div className="flex items-center justify-center gap-2">
           Already have an account?
           <Button to="/login" text={"Sign In"} variant="ghost" />
-        </p>
+        </div>
         <div className="flex items-center gap-6">
           <p>Sign Up with :</p>
           <Link to="/" className="bg-white p-2 rounded-md">

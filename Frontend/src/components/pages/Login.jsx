@@ -7,6 +7,7 @@ import { Button } from "../common/Button";
 import { useState } from "react";
 import { auth_api } from "@/api/auth.api";
 import { toast } from "react-toastify";
+import InputField from "../common/InputField";
 
 export const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,17 +17,14 @@ export const Login = () => {
 
   const handleSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await auth_api.post("/login", {
         email,
         password,
       });
-      // console.log(response.data);
       toast.success(response.data.message);
-
       navigate("/home");
     } catch (error) {
-      // console.log(error.response?.data?.message);
       toast.error(error.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
@@ -46,25 +44,20 @@ export const Login = () => {
             Have an other productive day !
           </p>
         </div>
-        <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
-          <Mail className="text-black" />
-          <input
-            type="email"
-            placeholder="E-mail"
-            className="outline-none text-black tracking-wider"
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
+        <InputField
+          icon={Mail}
+          type="email"
+          placeholder={"Email address"}
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <div>
-          <div className="flex items-center border rounded-md bg-white px-3 py-2 space-x-2">
-            <Lock className="text-black" />
-            <input
-              type="password"
-              placeholder="Password"
-              className="outline-none text-black tracking-wider"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+          <InputField
+            icon={Lock}
+            type="password"
+            placeholder={"Password"}
+            eyeIcon
+            onChange={(e) => setPassword(e.target.value)}
+          />
           <Button
             to="/signup"
             text={"Forgot Password?"}
@@ -74,12 +67,12 @@ export const Login = () => {
         </div>
         <Button
           onClick={handleSubmit}
-          text={`${loading ? "Signing" : "Sign In"}`}
+          text={`${loading ? "Signing In" : "Sign In"}`}
         />
-        <p className="flex items-center justify-center gap-2">
-          Don’t have an account?
+        <div className="flex items-center justify-center gap-2">
+          <span>Don’t have an account?</span>
           <Button to="/signup" text={"Sign Up"} variant="ghost" />
-        </p>
+        </div>
         <div className="flex items-center gap-6">
           <p>Sign In with :</p>
           <Link to="/" className="bg-white p-2 rounded-md">
