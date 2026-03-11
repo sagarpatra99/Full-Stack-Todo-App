@@ -11,7 +11,7 @@ export const TaskBar = ({ to, head, dueDate, status }) => {
           )}
           <div>
             <h4 className="font-semibold text-sm sm:text-xl tracking-wider">
-              {head.length > 10 ? head.slice(0, 30) + "..." : head}
+              {head.length > 10 ? head.slice(0, 20) + "..." : head}
             </h4>
             <p className="text-gray-500 text-xs sm:tracking-wider">{dueDate}</p>
           </div>

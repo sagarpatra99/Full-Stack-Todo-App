@@ -9,7 +9,7 @@ export const CompletedTaskBar = ({ to, head, dueDate }) => {
           <Check className="bg-green-500 rounded-full h-6 w-6 sm:h-8 sm:w-8 p-1 text-white" />
           <div>
             <h4 className="font-semibold text-sm sm:text-xl tracking-wider">
-              {head.length > 10 ? head.slice(0, 30) + "..." : head}
+              {head.length > 10 ? head.slice(0, 20) + "..." : head}
             </h4>
             <p className="text-gray-500 text-xs sm:tracking-wider">{dueDate}</p>
           </div>
