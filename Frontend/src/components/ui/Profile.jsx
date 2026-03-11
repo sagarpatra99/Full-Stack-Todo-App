@@ -36,8 +36,8 @@ export const Profile = ({ user, setUser }) => {
         title="Are you sure you want to logout?"
         desc="You will be logged out of your account and need to login again to
               access your tasks."
-        yes="Delete"
-        variant="Logout"
+        yes="Logout"
+        variant="danger"
         fn={handleLogout}
       >
         <LogOut className="text-red-500 cursor-pointer" />
