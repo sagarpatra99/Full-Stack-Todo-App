@@ -2,18 +2,7 @@ import { auth_api } from "@/api/auth.api";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-
-import {
-  AlertDialog,
-  AlertDialogTrigger,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
+import { AlertDialogBox } from "../common/AlertDialogBox";
 
 export const Profile = ({ user, setUser }) => {
   const navigate = useNavigate();
@@ -43,33 +32,15 @@ export const Profile = ({ user, setUser }) => {
           <p className="textsm sm:text-xl opacity-50">{user?.email}</p>
         </div>
       </div>
-      
-      <AlertDialog>
-        <AlertDialogTrigger asChild>
-          <LogOut className="text-red-500 cursor-pointer" />
-        </AlertDialogTrigger>
-
-        <AlertDialogContent className="w-80 sm:w-100">
-          <AlertDialogHeader>
-            <AlertDialogTitle>
-              Are you sure you want to logout?
-            </AlertDialogTitle>
-
-            <AlertDialogDescription>
-              You will be logged out of your account and need to login again to
-              access your tasks.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-
-            <AlertDialogAction onClick={handleLogout} className="bg-red-500">
-              Logout
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
+      <AlertDialogBox
+        title="Delete this task?"
+        desc="This action cannot be undone."
+        yes="Delete"
+        variant="danger"
+        fn={handleLogout}
+      >
+        <LogOut className="text-red-500 cursor-pointer" />
+      </AlertDialogBox>
     </div>
   );
 };

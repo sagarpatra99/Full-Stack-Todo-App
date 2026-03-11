@@ -9,6 +9,7 @@ import { H4 } from "../common/H4";
 import { TitleBar } from "../ui/TitleBar";
 import { toast } from "react-toastify";
 import { CreateTask } from "./CreateTask";
+import { AlertDialogBox } from "../common/AlertDialogBox";
 
 export const TaskDetails = () => {
   const [open, setOpen] = useState(false);
@@ -75,24 +76,39 @@ export const TaskDetails = () => {
         </p>
         <div className="flex items-center justify-center gap-6 sm:gap-16 absolute bottom-12 sm:bottom-10 left-1/2 -translate-x-1/2">
           {task.status === "pending" && (
-            <DetailsBtn
-              icon={Check}
-              text="Done"
-              className="bg-green-500"
+            <AlertDialogBox
+              title="Mark task as completed?"
+              desc="Mark task as completed?"
+              yes="Confirm"
               fn={handleCompleteTask}
-            />
+            >
+              <DetailsBtn icon={Check} text="Done" className="bg-green-500" />
+            </AlertDialogBox>
           )}
-          <DetailsBtn
-            icon={Trash2}
-            text={"Delete"}
-            className={"text-red-500"}
+          <AlertDialogBox
+            title="Delete this task?"
+            desc="This action cannot be undone."
+            yes="Delete"
+            variant="danger"
             fn={handleDeleteTask}
-          />
-          <DetailsBtn
-            icon={Pin}
-            text={"Pin"}
-            className="text-amber-500 rotate-45"
-          />
+          >
+            <DetailsBtn
+              icon={Trash2}
+              text={"Delete"}
+              className={"text-red-500"}
+            />
+          </AlertDialogBox>
+          <AlertDialogBox
+            title="Pin this task?"
+            desc="This task will appear at the top of your task list."
+            yes="Coming soon"
+          >
+            <DetailsBtn
+              icon={Pin}
+              text={"Pin"}
+              className="text-amber-500 rotate-45"
+            />
+          </AlertDialogBox>
         </div>
       </div>
       <CreateTask
