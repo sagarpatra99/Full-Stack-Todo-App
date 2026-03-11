@@ -33,10 +33,11 @@ export const Profile = ({ user, setUser }) => {
         </div>
       </div>
       <AlertDialogBox
-        title="Delete this task?"
-        desc="This action cannot be undone."
+        title="Are you sure you want to logout?"
+        desc="You will be logged out of your account and need to login again to
+              access your tasks."
         yes="Delete"
-        variant="danger"
+        variant="Logout"
         fn={handleLogout}
       >
         <LogOut className="text-red-500 cursor-pointer" />
