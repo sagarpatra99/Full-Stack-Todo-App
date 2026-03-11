@@ -7,6 +7,7 @@ import { formatTaskDay, formatTaskTime } from "@/utils/formatDate";
 import { DetailsBtn } from "../ui/DetailsBtn";
 import { H4 } from "../common/H4";
 import { TitleBar } from "../ui/TitleBar";
+import { toast } from "react-toastify";
 
 export const TaskDetails = () => {
   const { taskId } = useParams();
@@ -25,6 +26,20 @@ export const TaskDetails = () => {
   const handleDeleteTask = async () => {
     await task_api.delete(`/${taskId}`);
     navigate(-1);
+  };
+
+  const handleCompleteTask = async () => {
+    try {
+      const res = await task_api.patch(`/${taskId}`, {
+        status: "completed",
+      });
+
+      setTask(res.data.task);
+      toast.success("Task completed successfully!")
+    } catch (error) {
+      toast.error("Failed to update task");
+      console.error("Failed to update task", error);
+    }
   };
 
   if (!task) return <Loading />;
@@ -51,7 +66,7 @@ export const TaskDetails = () => {
       <p className="sm:text-xl max-h-80 overflow-y-auto">{task.description}</p>
       <div className="flex items-center justify-center gap-6 sm:gap-16 absolute bottom-12 sm:bottom-10 left-1/2 -translate-x-1/2">
         {task.status === "pending" && (
-          <DetailsBtn icon={Check} text="Done" className="bg-green-500" />
+          <DetailsBtn icon={Check} text="Done" className="bg-green-500" fn={handleCompleteTask} />
         )}
         <DetailsBtn
           icon={Trash2}
