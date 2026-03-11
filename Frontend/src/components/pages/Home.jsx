@@ -5,14 +5,14 @@ import { CompletedTaskBar } from "../ui/CompletedTaskBar";
 import { IncompleteTaskBar } from "../ui/IncompleteTaskBar";
 import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
-import { Loading } from "../common/Loading";
 import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
+import { HomeShimmer } from "../shimmer/HomeShimmer";
 
 export const Home = () => {
   const { user, setUser, pendingTasks, completedTasks, loading } = useHomeData();
 
-  if (loading) return <Loading />;
+  if (loading) return <HomeShimmer />;
   return (
     <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
       <Profile user={user} setUser={setUser} />
@@ -28,13 +28,8 @@ export const Home = () => {
           </div>
         </div>
         <div className="">
-          <div className="flex items-center justify-between">
             <H4 h={"Incomplete Tasks"} className="pb-2" />
-            <Link to={"/alltask"} className="hover:text-blue-500 pb-4 text-sm">
-              View All
-            </Link>
-          </div>
-          <div className="flex flex-col gap-4 sm:gap-6 max-h-30 overflow-y-auto">
+          <div className="flex flex-col gap-4 sm:gap-6 h-30 max-h-30 overflow-y-auto">
             {pendingTasks.length === 0 ? (
               <h2 className="text-sm sm:text-lg">No Pending Tasks Found</h2>
             ) : (

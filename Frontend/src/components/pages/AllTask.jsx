@@ -7,6 +7,7 @@ import { useHomeData } from "@/hooks/useHomeData";
 import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
 import { LoadingSpinner } from "../common/LoadingSpinner";
+import { TaskBarShimmer } from "../shimmer/TaskBarShimmer";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
@@ -58,7 +59,14 @@ export const AllTask = () => {
         </nav>
         <H4 h="Tasks List" className={"pb-2"} />
         <div className="max-h-110 overflow-y-auto flex flex-col gap-6">
-          {loading ? <LoadingSpinner className="mt-25" /> : filteredTasks.length === 0 ? (
+          {loading ? (
+            <>
+              <TaskBarShimmer showIcon />
+              <TaskBarShimmer />
+              <TaskBarShimmer showIcon />
+              <TaskBarShimmer />
+            </>
+          ) : filteredTasks.length === 0 ? (
             <h2 className="text-sm sm:text-lg">No tasks found</h2>
           ) : (
             filteredTasks.map((task) => {
@@ -80,7 +88,12 @@ export const AllTask = () => {
           </button>
         </div>
       </div>
-      <CreateTask t="Create Task" open={open} setOpen={setOpen} refetchTasks={refetchTasks} />
+      <CreateTask
+        t="Create Task"
+        open={open}
+        setOpen={setOpen}
+        refetchTasks={refetchTasks}
+      />
       <Navbar />
     </>
   );
