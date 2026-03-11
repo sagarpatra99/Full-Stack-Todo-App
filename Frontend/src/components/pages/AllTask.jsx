@@ -6,7 +6,6 @@ import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
-import { Loading } from "../common/Loading";
 import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export const AllTask = () => {
@@ -81,7 +80,7 @@ export const AllTask = () => {
           </button>
         </div>
       </div>
-      <CreateTask open={open} setOpen={setOpen} refetchTasks={refetchTasks} />
+      <CreateTask t="Create Task" open={open} setOpen={setOpen} refetchTasks={refetchTasks} />
       <Navbar />
     </>
   );
