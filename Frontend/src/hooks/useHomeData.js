@@ -41,6 +41,7 @@ export const useHomeData = () => {
 
   return {
     user,
+    setUser,
     allTasks,
     pendingTasks,
     completedTasks,

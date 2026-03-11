@@ -10,12 +10,12 @@ import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
 
 export const Home = () => {
-  const { user, pendingTasks, completedTasks, loading } = useHomeData();
+  const { user, setUser, pendingTasks, completedTasks, loading } = useHomeData();
 
   if (loading) return <Loading />;
   return (
     <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
-      <Profile user={user} />
+      <Profile user={user} setUser={setUser} />
       <div className="space-y-3 sm:space-y-6">
         <div>
           <H4 h="Group Tasks" className="" />
