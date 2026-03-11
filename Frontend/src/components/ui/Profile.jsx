@@ -3,6 +3,18 @@ import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import {
+  AlertDialog,
+  AlertDialogTrigger,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
+
 export const Profile = ({ user, setUser }) => {
   const navigate = useNavigate();
   const handleLogout = async () => {
@@ -31,9 +43,33 @@ export const Profile = ({ user, setUser }) => {
           <p className="textsm sm:text-xl opacity-50">{user?.email}</p>
         </div>
       </div>
-      <div className="flex items-center gap-6">
-        <LogOut className="text-red-500" onClick={handleLogout} />
-      </div>
+      
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
+          <LogOut className="text-red-500 cursor-pointer" />
+        </AlertDialogTrigger>
+
+        <AlertDialogContent className="w-80 sm:w-100">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to logout?
+            </AlertDialogTitle>
+
+            <AlertDialogDescription>
+              You will be logged out of your account and need to login again to
+              access your tasks.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+
+            <AlertDialogAction onClick={handleLogout} className="bg-red-500">
+              Logout
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };

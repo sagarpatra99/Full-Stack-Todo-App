@@ -18,23 +18,23 @@ export const Home = () => {
       <Profile user={user} setUser={setUser} />
       <div className="space-y-3 sm:space-y-6">
         <div>
-          <H4 h="Group Tasks" className="" />
+          <H4 h="Group Tasks" className="pb-2" />
           <div className="">
             <Link to={"/alltask"}>
               <div className="py-6 sm:py-10 px-4 sm:px-8 rounded-md flex items-center gap-2 sm:gap-4 bg-[#0a3058] w-fit text-gray-200">
-                <Plus /> <span className="sm:text-2xl">Add Task</span>
+                <Plus /> <span className="sm:text-2xl">Create Group</span>
               </div>
             </Link>
           </div>
         </div>
         <div className="">
           <div className="flex items-center justify-between">
-            <H4 h={"Incomplete Tasks"} className="pb-" />
+            <H4 h={"Incomplete Tasks"} className="pb-2" />
             <Link to={"/alltask"} className="hover:text-blue-500 pb-4 text-sm">
               View All
             </Link>
           </div>
-          <div className="flex flex-col gap-4 sm:gap-6 max-h-40 overflow-y-auto">
+          <div className="flex flex-col gap-4 sm:gap-6 max-h-30 overflow-y-auto">
             {pendingTasks.length === 0 ? (
               <h2 className="text-sm sm:text-lg">No Pending Tasks Found</h2>
             ) : (
@@ -52,8 +52,8 @@ export const Home = () => {
           </div>
         </div>
         <div>
-          <H4 h="Completed Tasks" />
-          <div className="flex flex-col gap-6">
+          <H4 h="Completed Tasks" className={"pb-2"} />
+          <div className="flex flex-col gap-4 sm:gap-6 max-h-30 overflow-y-auto">
             {completedTasks.length === 0 ? (
               <h2 className="text-sm sm:text-lg">No Completed Tasks Found</h2>
             ) : (

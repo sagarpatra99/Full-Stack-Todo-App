@@ -6,13 +6,15 @@ import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
+import { Loading } from "../common/Loading";
+import { LoadingSpinner } from "../common/LoadingSpinner";
 
 export const AllTask = () => {
   const [open, setOpen] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("all");
 
-  const { allTasks, refetchTasks } = useHomeData();
+  const { allTasks, refetchTasks, loading } = useHomeData();
 
   const filteredTasks = allTasks.filter((task) => {
     const matchStatus =
@@ -55,9 +57,9 @@ export const AllTask = () => {
             </select>
           </div>
         </nav>
-        <H4 h="Tasks List" />
-        <div className=" flex flex-col gap-6">
-          {filteredTasks.length === 0 ? (
+        <H4 h="Tasks List" className={"pb-2"} />
+        <div className="max-h-110 overflow-y-auto flex flex-col gap-6">
+          {loading ? <LoadingSpinner className="mt-25" /> : filteredTasks.length === 0 ? (
             <h2 className="text-sm sm:text-lg">No tasks found</h2>
           ) : (
             filteredTasks.map((task) => {
