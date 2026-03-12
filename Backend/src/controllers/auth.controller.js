@@ -108,6 +108,9 @@ const { sendEmail } = require("../services/mail.service");
 
 const controllerRegister = async (req, res) => {
   try {
+
+    console.log("Register API hit");
+
     const { fullname, email, password } = req.body;
 
     if (!fullname || !email || !password) {
@@ -140,10 +143,11 @@ const controllerRegister = async (req, res) => {
       { expiresIn: "1h" },
     );
 
-    // remove password before sending response
-    const { password: _, ...safeUser } = user.toObject();
+    console.log("User created:", email);
 
-    // send email AFTER response
+    try {
+      console.log("Attempting to send email...");
+
     await sendEmail({
       to: email,
       subject: "Welcome to DO IT",
@@ -173,9 +177,15 @@ const controllerRegister = async (req, res) => {
         </div>
       </div>
       `,
-    }).catch((err) => {
-      console.error("Email sending failed:", err.message);
-    });
+    })
+
+    console.log("Email function executed successfully");
+
+    } catch (err) {
+      console.error("Email sending failed:", err);
+    }
+
+    const { password: _, ...safeUser } = user.toObject();
 
     res.status(201).json({
       message: "User Registered Successfully",
@@ -183,6 +193,8 @@ const controllerRegister = async (req, res) => {
       user: safeUser,
     });
   } catch (error) {
+    console.error("Register controller error:", error);
+    
     res.status(500).json({
       message: "Server error",
       error: error.message,
