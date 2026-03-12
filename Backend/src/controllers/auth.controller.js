@@ -127,30 +127,111 @@ const controllerVerifyEmail = async (req, res) => {
     await user.save();
 
     res.send(`
-      <html>
-        <head>
-          <title>Email Verified</title>
-        </head>
-        <body style="font-family: Arial; background:#f4f4f4; display:flex; justify-content:center; align-items:center; height:100vh;">
-          <div style="background:white; padding:40px; border-radius:10px; text-align:center; max-width:500px;">
-            
-            <h2 style="color:#22c55e;">Email Verified Successfully 🎉</h2>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Verified</title>
 
-            <p>Hello <b>${user.fullname}</b>,</p>
+<style>
+  *{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
 
-            <p>Your email has been successfully verified.</p>
+  body{
+    background: linear-gradient(135deg,#1251A6,#062949);
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+  }
 
-            <p>You can now start using <b>DO IT</b>.</p>
+  .container{
+    background:white;
+    width:100%;
+    max-width:420px;
+    padding:35px 30px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 10px 25px rgba(0,0,0,0.2);
+  }
 
-            <a href="https://todo-app-sagar.vercel.app/login"
-              style="display:inline-block;margin-top:20px;padding:10px 20px;background:#0EA5E9;color:white;text-decoration:none;border-radius:6px;">
-              Go to App
-            </a>
+  .icon{
+    font-size:48px;
+    margin-bottom:15px;
+  }
 
-          </div>
-        </body>
-      </html>
-    `);
+  h2{
+    color:#22c55e;
+    margin-bottom:12px;
+  }
+
+  p{
+    color:#444;
+    margin-bottom:10px;
+    line-height:1.5;
+  }
+
+  .btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:12px 24px;
+    background:#0EA5E9;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:bold;
+    transition:0.2s;
+  }
+
+  .btn:hover{
+    background:#0284c7;
+  }
+
+  @media (max-width:480px){
+    .container{
+      padding:28px 20px;
+    }
+
+    h2{
+      font-size:20px;
+    }
+
+    p{
+      font-size:14px;
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="icon">✅</div>
+
+  <h2>Email Verified Successfully 🎉</h2>
+
+  <p>Hello <b>${user.fullname}</b>,</p>
+
+  <p>Your email has been successfully verified.</p>
+
+  <p>You can now start using <b>DO IT</b>.</p>
+
+  <a class="btn" href="https://todo-app-sagar.vercel.app/login">
+    Go to Login
+  </a>
+
+</div>
+
+</body>
+</html>
+`);
   } catch (error) {
     res.status(400).json({
       message: "Invalid or Expired Token",
