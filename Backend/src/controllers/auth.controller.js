@@ -45,13 +45,13 @@ const { sendEmail } = require("../services/mail.service");
 //         html: `
 //       <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
 //         <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
-          
+
 //           <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
 
 //           <p>Hi <b>${fullname}</b>,</p>
 
 //           <p>
-//             Thank you for registering at <b>DO IT</b>.  
+//             Thank you for registering at <b>DO IT</b>.
 //             We're excited to have you on board!
 //           </p>
 
@@ -137,20 +137,14 @@ const controllerRegister = async (req, res) => {
     const emailVerificationToken = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1h" },
     );
 
     // remove password before sending response
     const { password: _, ...safeUser } = user.toObject();
 
-    res.status(201).json({
-      message: "User Registered Successfully",
-      success: true,
-      user: safeUser,
-    });
-
     // send email AFTER response
-    sendEmail({
+    await sendEmail({
       to: email,
       subject: "Welcome to DO IT",
       html: `
@@ -178,11 +172,16 @@ const controllerRegister = async (req, res) => {
 
         </div>
       </div>
-      `
-    }).catch(err => {
+      `,
+    }).catch((err) => {
       console.error("Email sending failed:", err.message);
     });
 
+    res.status(201).json({
+      message: "User Registered Successfully",
+      success: true,
+      user: safeUser,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Server error",
