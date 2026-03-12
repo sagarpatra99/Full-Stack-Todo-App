@@ -39,7 +39,7 @@ const controllerRegister = async (req, res) => {
     );
 
     try {
-      await sendEmail({
+      sendEmail({
         to: email,
         subject: "Welcome to DO IT",
         html: `
