@@ -4,6 +4,108 @@ const bcrypt = require("bcrypt");
 const blacklistModel = require("../model/blacklist.model");
 const { sendEmail } = require("../services/mail.service");
 
+// const controllerRegister = async (req, res) => {
+//   try {
+//     const { fullname, email, password } = req.body;
+
+//     if (!fullname || !email || !password) {
+//       return res.status(400).json({
+//         message: "All fields are required",
+//         success: false,
+//       });
+//     }
+
+//     const existingUser = await userModel.findOne({ email });
+
+//     if (existingUser)
+//       return res.status(409).json({
+//         message: "Email already exists!",
+//         success: false,
+//         error: "User already exists",
+//       });
+
+//     const hash = await bcrypt.hash(password, 10);
+
+//     const user = await userModel.create({
+//       fullname,
+//       email,
+//       password: hash,
+//     });
+
+//     const emailVerificationToken = jwt.sign(
+//       { id: user._id, email: user.email },
+//       process.env.JWT_SECRET,
+//       { expiresIn: "1h" },
+//     );
+
+//     try {
+//       sendEmail({
+//         to: email,
+//         subject: "Welcome to DO IT",
+//         html: `
+//       <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
+//         <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
+          
+//           <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
+
+//           <p>Hi <b>${fullname}</b>,</p>
+
+//           <p>
+//             Thank you for registering at <b>DO IT</b>.  
+//             We're excited to have you on board!
+//           </p>
+
+//           <p>
+//             Start organizing your tasks and boost your productivity today.
+//           </p>
+
+//           <p>
+//             Please verify your email by clicking the link below :-
+//           </p>
+
+//           <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
+
+//           <hr style="margin:20px 0"/>
+
+//           <p style="font-size:14px; color:gray;">
+//             Best regards,<br/>
+//             <b>DO IT Team</b>
+//           </p>
+
+//         </div>
+//       </div>
+//     `,
+//       });
+//     } catch (emailError) {
+//       console.error("Email sending failed:", emailError.message);
+//     }
+
+//     // const token = jwt.sign(
+//     //   { id: user._id, email: user.email },
+//     //   process.env.JWT_SECRET,
+//     //   { expiresIn: "1h" },
+//     // );
+
+//     res.cookie("token", emailVerificationToken, {
+//       httpOnly: true,
+//       secure: true,
+//       sameSite: "none",
+//       maxAge: 60 * 60 * 1000, // 1 hour
+//     });
+
+//     res.status(201).json({
+//       message: "User Registered Successfully",
+//       success: true,
+//       user,
+//     });
+//   } catch (error) {
+//     res.status(500).json({
+//       message: "Server error",
+//       error: error.message,
+//     });
+//   }
+// };
+
 const controllerRegister = async (req, res) => {
   try {
     const { fullname, email, password } = req.body;
@@ -17,12 +119,12 @@ const controllerRegister = async (req, res) => {
 
     const existingUser = await userModel.findOne({ email });
 
-    if (existingUser)
+    if (existingUser) {
       return res.status(409).json({
         message: "Email already exists!",
         success: false,
-        error: "User already exists",
       });
+    }
 
     const hash = await bcrypt.hash(password, 10);
 
@@ -35,14 +137,23 @@ const controllerRegister = async (req, res) => {
     const emailVerificationToken = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" },
+      { expiresIn: "1h" }
     );
 
-    try {
-      sendEmail({
-        to: email,
-        subject: "Welcome to DO IT",
-        html: `
+    // remove password before sending response
+    const { password: _, ...safeUser } = user.toObject();
+
+    res.status(201).json({
+      message: "User Registered Successfully",
+      success: true,
+      user: safeUser,
+    });
+
+    // send email AFTER response
+    sendEmail({
+      to: email,
+      subject: "Welcome to DO IT",
+      html: `
       <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
         <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
           
@@ -50,20 +161,13 @@ const controllerRegister = async (req, res) => {
 
           <p>Hi <b>${fullname}</b>,</p>
 
-          <p>
-            Thank you for registering at <b>DO IT</b>.  
-            We're excited to have you on board!
-          </p>
+          <p>Thank you for registering at <b>DO IT</b>.</p>
 
-          <p>
-            Start organizing your tasks and boost your productivity today.
-          </p>
+          <p>Please verify your email by clicking the link below:</p>
 
-          <p>
-            Please verify your email by clicking the link below :-
-          </p>
-
-          <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
+          <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">
+          Verify Email
+          </a>
 
           <hr style="margin:20px 0"/>
 
@@ -74,30 +178,11 @@ const controllerRegister = async (req, res) => {
 
         </div>
       </div>
-    `,
-      });
-    } catch (emailError) {
-      console.error("Email sending failed:", emailError.message);
-    }
-
-    // const token = jwt.sign(
-    //   { id: user._id, email: user.email },
-    //   process.env.JWT_SECRET,
-    //   { expiresIn: "1h" },
-    // );
-
-    res.cookie("token", emailVerificationToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
-      maxAge: 60 * 60 * 1000, // 1 hour
+      `
+    }).catch(err => {
+      console.error("Email sending failed:", err.message);
     });
 
-    res.status(201).json({
-      message: "User Registered Successfully",
-      success: true,
-      user,
-    });
   } catch (error) {
     res.status(500).json({
       message: "Server error",
