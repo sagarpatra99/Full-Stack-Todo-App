@@ -1,8 +1,11 @@
 // const nodemailer = require("nodemailer");
 import nodemailer from "nodemailer";
 
-const transpoter = nodemailer.createTransport({
-  service: "gmail",
+const transporter = nodemailer.createTransport({
+  //   service: "gmail",
+  host: "smtp.gmail.com",
+  port: 465,
+  secure: true,
   auth: {
     type: "OAuth2",
     user: process.env.GOOGLE_USER,
@@ -10,15 +13,16 @@ const transpoter = nodemailer.createTransport({
     refreshToken: process.env.GOOGLE_REFRESH_TOKEN,
     clientId: process.env.GOOGLE_CLIENT_ID,
   },
+  connectionTimeout: 10000,
 });
 
-transpoter
+transporter
   .verify()
   .then(() => {
-    console.log("Email transpoter is ready to send emails");
+    console.log("Email transporter is ready to send emails");
   })
   .catch((err) => {
-    console.log("Email transpoter verification failed:", err);
+    console.log("Email transporter verification failed:", err);
   });
 
 export const sendEmail = async ({ to, subject, html, text }) => {
@@ -30,6 +34,6 @@ export const sendEmail = async ({ to, subject, html, text }) => {
     text,
   };
 
-  const details = await transpoter.sendMail(mailOptions);
+  const details = await transporter.sendMail(mailOptions);
   console.log(`Email sent:`, details);
 };
