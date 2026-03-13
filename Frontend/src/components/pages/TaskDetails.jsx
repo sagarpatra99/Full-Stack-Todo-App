@@ -2,7 +2,6 @@ import { task_api } from "@/api/task.api";
 import { CalendarDays, Check, Clock, Edit, Pin, Trash2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { Loading } from "../common/Loading";
 import { formatTaskDay, formatTaskTime } from "@/utils/formatDate";
 import { DetailsBtn } from "../ui/DetailsBtn";
 import { H4 } from "../common/H4";
@@ -16,7 +15,6 @@ export const TaskDetails = () => {
   const [open, setOpen] = useState(false);
   const { taskId } = useParams();
   const [task, setTask] = useState(null);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -36,7 +34,6 @@ export const TaskDetails = () => {
 
   const handleCompleteTask = async () => {
     try {
-      setLoading(true);
       const res = await task_api.patch(`/${taskId}`, {
         status: "completed",
       });
@@ -46,8 +43,6 @@ export const TaskDetails = () => {
     } catch (error) {
       toast.error("Failed to update task");
       console.error("Failed to update task", error);
-    } finally {
-      setLoading(false);
     }
   };
 
@@ -55,7 +50,7 @@ export const TaskDetails = () => {
     setTask(updatedTask);
   };
 
-  if (loading) return <TaskDetailsShimmer />;
+  if (!task) return <TaskDetailsShimmer />;
 
   return (
     <>
