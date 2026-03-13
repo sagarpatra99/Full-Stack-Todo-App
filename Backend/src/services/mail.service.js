@@ -40,7 +40,7 @@
 
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend("re_QzvNHKFa_BWPDkakH1xUReUJKNPKzC7HU");
 
 export const sendEmail = async ({ to, subject, html }) => {
   try {
