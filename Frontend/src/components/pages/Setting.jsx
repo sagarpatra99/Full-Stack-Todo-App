@@ -1,11 +1,9 @@
-import { LogOut } from "lucide-react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Button } from "../common/Button";
 import { TitleBar } from "../ui/TitleBar";
 import { Navbar } from "../ui/Navbar";
 
@@ -56,15 +54,6 @@ export const Setting = () => {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {/* Logout Button */}
-      <Button
-        to="/"
-        variant="danger"
-        className="w-56 mx-auto absolute bottom-20 right-150"
-      >
-        <LogOut />
-        Logout
-      </Button>
       <Navbar />
     </div>
   );

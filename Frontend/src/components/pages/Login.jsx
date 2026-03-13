@@ -43,7 +43,7 @@ export const Login = () => {
   };
   return (
     <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex sm:flex-row flex-col items-center justify-center text-white">
-      <div className="w-full sm:w-[50%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-48 bg-purple-400k text-center space-y-6">
+      <div className="w-full sm:w-[50%] lg:w-[60%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-48 lg:px-32 bg-purple-400k text-center space-y-6">
         <div className="bg-white mx-auto w-fit p-4 rounded-full cursor-pointer shadow-2xl hover:shadow-lg duration-300 shadow-gray-200">
           <Check size={30} className="text-[#08315A]" />
         </div>
@@ -108,7 +108,7 @@ export const Login = () => {
           </Link>
         </div>
       </div>
-      <div className="hidden sm:block sm:w-[50%] pl-36">
+      <div className="hidden sm:block sm:w-[50%] lg:w-[40%] sm:pl-36 lg:pl-5">
         <img src={loginDesktop} alt="" className="rounded-lg" />
       </div>
     </div>

@@ -47,7 +47,7 @@ export const SignUp = () => {
 
   return (
     <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex sm:flex-row flex-col items-center justify-center text-white">
-      <div className="w-full sm:w-[50%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-56 text-center space-y-6">
+      <div className="w-full sm:w-[50%] lg:w-[60%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-56 lg:px-40 text-center space-y-6">
         <div className="bg-white mx-auto w-fit p-4 rounded-full cursor-pointer shadow-2xl hover:shadow-lg duration-300 shadow-gray-200">
           <Check size={30} className="text-[#08315A]" />
         </div>
@@ -116,7 +116,7 @@ export const SignUp = () => {
           </Link>
         </div>
       </div>
-      <div className="hidden sm:block sm:w-[50%]">
+      <div className="hidden sm:block sm:w-[50%] lg:w-[40%]">
         <img src={signupDesktop} alt="" className="rounded-lg" />
       </div>
     </div>
