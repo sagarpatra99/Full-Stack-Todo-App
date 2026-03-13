@@ -52,10 +52,10 @@ export const SignUp = () => {
           <Check size={30} className="text-[#08315A]" />
         </div>
         <div className="text-start space-y-2">
-          <h2 className="text-4xl">
+          <h2 className="3xs:text-2xl 2xs:text-3xl sm:text-4xl">
             Welcome to <span className="headingFont">DO IT</span>
           </h2>
-          <p className="text-xl">Create an account and Join us now!</p>
+          <p className="text-sm 3xs:text-base 2xs:text-lg sm:text-xl">Create an account and Join us now!</p>
         </div>
         {errors.fullname && (
           <p className="text-red-500 text-sm text-start mb-1">

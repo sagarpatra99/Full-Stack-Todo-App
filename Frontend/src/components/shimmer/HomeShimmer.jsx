@@ -1,6 +1,6 @@
 export const HomeShimmer = () => {
   return (
-    <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] animate-pulses">
+    <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] animate-pulse">
       {/* Profile Skeleton */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-4">

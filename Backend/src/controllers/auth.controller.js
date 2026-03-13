@@ -109,7 +109,7 @@ const { sendEmail } = require("../services/mail.service");
 const controllerRegister = async (req, res) => {
   try {
 
-    console.log("Register API hit");
+    // console.log("Register API hit");
 
     const { fullname, email, password } = req.body;
 
@@ -137,55 +137,62 @@ const controllerRegister = async (req, res) => {
       password: hash,
     });
 
-    const emailVerificationToken = jwt.sign(
+    const token = jwt.sign(
       { id: user._id, email: user.email },
       process.env.JWT_SECRET,
       { expiresIn: "1h" },
     );
 
-    console.log("User created:", email);
+    // console.log("User created:", email);
 
-    try {
-      console.log("Attempting to send email...");
+    // try {
+    //   console.log("Attempting to send email...");
 
-    await sendEmail({
-      to: email,
-      subject: "Welcome to DO IT",
-      html: `
-      <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
-        <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
+    // await sendEmail({
+    //   to: email,
+    //   subject: "Welcome to DO IT",
+    //   html: `
+    //   <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
+    //     <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
           
-          <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
+    //       <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
 
-          <p>Hi <b>${fullname}</b>,</p>
+    //       <p>Hi <b>${fullname}</b>,</p>
 
-          <p>Thank you for registering at <b>DO IT</b>.</p>
+    //       <p>Thank you for registering at <b>DO IT</b>.</p>
 
-          <p>Please verify your email by clicking the link below:</p>
+    //       <p>Please verify your email by clicking the link below:</p>
 
-          <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">
-          Verify Email
-          </a>
+    //       <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">
+    //       Verify Email
+    //       </a>
 
-          <hr style="margin:20px 0"/>
+    //       <hr style="margin:20px 0"/>
 
-          <p style="font-size:14px; color:gray;">
-            Best regards,<br/>
-            <b>DO IT Team</b>
-          </p>
+    //       <p style="font-size:14px; color:gray;">
+    //         Best regards,<br/>
+    //         <b>DO IT Team</b>
+    //       </p>
 
-        </div>
-      </div>
-      `,
-    })
+    //     </div>
+    //   </div>
+    //   `,
+    // })
 
-    console.log("Email function executed successfully");
+    // console.log("Email function executed successfully");
 
-    } catch (err) {
-      console.error("Email sending failed:", err);
-    }
+    // } catch (err) {
+    //   console.error("Email sending failed:", err);
+    // }
 
     const { password: _, ...safeUser } = user.toObject();
+
+        res.cookie("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+      maxAge: 60 * 60 * 1000, // 1 hour
+    });
 
     res.status(201).json({
       message: "User Registered Successfully",
@@ -202,139 +209,139 @@ const controllerRegister = async (req, res) => {
   }
 };
 
-const controllerVerifyEmail = async (req, res) => {
-  try {
-    const { token } = req.query;
+// const controllerVerifyEmail = async (req, res) => {
+//   try {
+//     const { token } = req.query;
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    const user = await userModel.findOne({ email: decoded.email });
+//     const user = await userModel.findOne({ email: decoded.email });
 
-    if (!user) {
-      return res.status(400).json({
-        message: "Invalid token",
-        success: false,
-        err: "User not found",
-      });
-    }
+//     if (!user) {
+//       return res.status(400).json({
+//         message: "Invalid token",
+//         success: false,
+//         err: "User not found",
+//       });
+//     }
 
-    user.verified = true;
+//     user.verified = true;
 
-    await user.save();
+//     await user.save();
 
-    res.send(`
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Email Verified</title>
+//     res.send(`
+// <!DOCTYPE html>
+// <html lang="en">
+// <head>
+// <meta charset="UTF-8">
+// <meta name="viewport" content="width=device-width, initial-scale=1.0">
+// <title>Email Verified</title>
 
-<style>
-  *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Arial, Helvetica, sans-serif;
-  }
+// <style>
+//   *{
+//     margin:0;
+//     padding:0;
+//     box-sizing:border-box;
+//     font-family: Arial, Helvetica, sans-serif;
+//   }
 
-  body{
-    background: linear-gradient(135deg,#1251A6,#062949);
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:20px;
-  }
+//   body{
+//     background: linear-gradient(135deg,#1251A6,#062949);
+//     min-height:100vh;
+//     display:flex;
+//     align-items:center;
+//     justify-content:center;
+//     padding:20px;
+//   }
 
-  .container{
-    background:white;
-    width:100%;
-    max-width:420px;
-    padding:35px 30px;
-    border-radius:12px;
-    text-align:center;
-    box-shadow:0 10px 25px rgba(0,0,0,0.2);
-  }
+//   .container{
+//     background:white;
+//     width:100%;
+//     max-width:420px;
+//     padding:35px 30px;
+//     border-radius:12px;
+//     text-align:center;
+//     box-shadow:0 10px 25px rgba(0,0,0,0.2);
+//   }
 
-  .icon{
-    font-size:48px;
-    margin-bottom:15px;
-  }
+//   .icon{
+//     font-size:48px;
+//     margin-bottom:15px;
+//   }
 
-  h2{
-    color:#22c55e;
-    margin-bottom:12px;
-  }
+//   h2{
+//     color:#22c55e;
+//     margin-bottom:12px;
+//   }
 
-  p{
-    color:#444;
-    margin-bottom:10px;
-    line-height:1.5;
-  }
+//   p{
+//     color:#444;
+//     margin-bottom:10px;
+//     line-height:1.5;
+//   }
 
-  .btn{
-    display:inline-block;
-    margin-top:20px;
-    padding:12px 24px;
-    background:#0EA5E9;
-    color:white;
-    text-decoration:none;
-    border-radius:6px;
-    font-weight:bold;
-    transition:0.2s;
-  }
+//   .btn{
+//     display:inline-block;
+//     margin-top:20px;
+//     padding:12px 24px;
+//     background:#0EA5E9;
+//     color:white;
+//     text-decoration:none;
+//     border-radius:6px;
+//     font-weight:bold;
+//     transition:0.2s;
+//   }
 
-  .btn:hover{
-    background:#0284c7;
-  }
+//   .btn:hover{
+//     background:#0284c7;
+//   }
 
-  @media (max-width:480px){
-    .container{
-      padding:28px 20px;
-    }
+//   @media (max-width:480px){
+//     .container{
+//       padding:28px 20px;
+//     }
 
-    h2{
-      font-size:20px;
-    }
+//     h2{
+//       font-size:20px;
+//     }
 
-    p{
-      font-size:14px;
-    }
-  }
-</style>
-</head>
+//     p{
+//       font-size:14px;
+//     }
+//   }
+// </style>
+// </head>
 
-<body>
+// <body>
 
-<div class="container">
+// <div class="container">
 
-  <div class="icon">✅</div>
+//   <div class="icon">✅</div>
 
-  <h2>Email Verified Successfully 🎉</h2>
+//   <h2>Email Verified Successfully 🎉</h2>
 
-  <p>Hello <b>${user.fullname}</b>,</p>
+//   <p>Hello <b>${user.fullname}</b>,</p>
 
-  <p>Your email has been successfully verified.</p>
+//   <p>Your email has been successfully verified.</p>
 
-  <p>You can now start using <b>DO IT</b>.</p>
+//   <p>You can now start using <b>DO IT</b>.</p>
 
-  <a class="btn" href="https://todo-app-sagar.vercel.app/login">
-    Go to Login
-  </a>
+//   <a class="btn" href="https://todo-app-sagar.vercel.app/login">
+//     Go to Login
+//   </a>
 
-</div>
+// </div>
 
-</body>
-</html>
-`);
-  } catch (error) {
-    res.status(400).json({
-      message: "Invalid or Expired Token",
-      error: error.message,
-    });
-  }
-};
+// </body>
+// </html>
+// `);
+//   } catch (error) {
+//     res.status(400).json({
+//       message: "Invalid or Expired Token",
+//       error: error.message,
+//     });
+//   }
+// };
 
 const controllerLogin = async (req, res) => {
   try {
@@ -354,13 +361,13 @@ const controllerLogin = async (req, res) => {
         message: "Invalid email or password!",
       });
 
-    if (!user.verified) {
-      return res.status(400).json({
-        message: "Please verify your email before loggin in",
-        success: false,
-        err: "Email not verified",
-      });
-    }
+    // if (!user.verified) {
+    //   return res.status(400).json({
+    //     message: "Please verify your email before loggin in",
+    //     success: false,
+    //     err: "Email not verified",
+    //   });
+    // }
 
     const token = jwt.sign(
       { id: user._id, email: user.email },
@@ -442,7 +449,6 @@ const controllerLogoutUser = async (req, res) => {
 
 module.exports = {
   controllerRegister,
-  controllerVerifyEmail,
   controllerLogin,
   controllerGetMe,
   controllerLogoutUser,
