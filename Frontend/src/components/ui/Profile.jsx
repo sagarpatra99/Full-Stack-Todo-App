@@ -1,7 +1,7 @@
 import { auth_api } from "@/api/auth.api";
 import { LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { AlertDialogBox } from "../common/AlertDialogBox";
 
 export const Profile = ({ user, setUser }) => {

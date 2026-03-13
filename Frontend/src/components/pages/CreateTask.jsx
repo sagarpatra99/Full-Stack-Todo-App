@@ -1,7 +1,7 @@
 import { task_api } from "@/api/task.api";
 import { TextAlignCenter, Type } from "lucide-react";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 
 export const CreateTask = ({
   t,
