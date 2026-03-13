@@ -39,7 +39,7 @@ export const Home = () => {
         <div>
           <H4 h={"Incomplete Tasks"} className="pb-2" />
 
-          <div className="flex flex-col gap-3 sm:gap-5 max-h-[120px] sm:max-h-[160px] overflow-y-auto pr-1">
+          <div className="flex flex-col gap-3 sm:gap-5 max-h-30 sm:max-h-40 overflow-y-auto pr-1">
             {pendingTasks.length === 0 ? (
               <h2 className="text-sm sm:text-lg text-gray-200">
                 No Pending Tasks Found
@@ -63,7 +63,7 @@ export const Home = () => {
         <div>
           <H4 h="Completed Tasks" className={"pb-2"} />
 
-          <div className="flex flex-col gap-3 sm:gap-5 max-h-[120px] sm:max-h-[160px] overflow-y-auto pr-1">
+          <div className="flex flex-col gap-3 sm:gap-5 max-h-30 sm:max-h-40 overflow-y-auto pr-1">
             {completedTasks.length === 0 ? (
               <h2 className="text-sm sm:text-lg text-gray-200">
                 No Completed Tasks Found

@@ -10,11 +10,13 @@ import { TitleBar } from "../ui/TitleBar";
 import { toast } from "sonner";
 import { CreateTask } from "./CreateTask";
 import { AlertDialogBox } from "../common/AlertDialogBox";
+import { TaskDetailsShimmer } from "../shimmer/TaskDetailsShimmer";
 
 export const TaskDetails = () => {
   const [open, setOpen] = useState(false);
   const { taskId } = useParams();
   const [task, setTask] = useState(null);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -34,6 +36,7 @@ export const TaskDetails = () => {
 
   const handleCompleteTask = async () => {
     try {
+      setLoading(true);
       const res = await task_api.patch(`/${taskId}`, {
         status: "completed",
       });
@@ -43,6 +46,8 @@ export const TaskDetails = () => {
     } catch (error) {
       toast.error("Failed to update task");
       console.error("Failed to update task", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -50,7 +55,7 @@ export const TaskDetails = () => {
     setTask(updatedTask);
   };
 
-  if (!task) return <Loading />;
+  if (loading) return <TaskDetailsShimmer />;
 
   return (
     <>
@@ -90,7 +95,6 @@ export const TaskDetails = () => {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-10 mt-10 sm:mt-16">
-
           {task.status === "pending" && (
             <AlertDialogBox
               title="Mark task as completed?"
@@ -98,11 +102,7 @@ export const TaskDetails = () => {
               yes="Confirm"
               fn={handleCompleteTask}
             >
-              <DetailsBtn
-                icon={Check}
-                text="Done"
-                className="bg-green-500"
-              />
+              <DetailsBtn icon={Check} text="Done" className="bg-green-500" />
             </AlertDialogBox>
           )}
 
@@ -131,7 +131,6 @@ export const TaskDetails = () => {
               className="text-amber-500 rotate-45"
             />
           </AlertDialogBox>
-
         </div>
       </div>
 

@@ -96,7 +96,7 @@ export const CreateTask = ({
 
       {/* Bottom Sheet */}
       <div
-        className={`fixed left-1/2 -translate-x-1/2 bottom-0 w-full sm:w-[90%] lg:w-[700px] bg-white text-black rounded-t-3xl z-50 transform transition-transform duration-300 ${
+        className={`fixed left-1/2 -translate-x-1/2 bottom-0 w-full sm:w-[90%] lg:w-175 bg-white text-black rounded-t-3xl z-50 transform transition-transform duration-300 ${
           open ? "translate-y-0" : "translate-y-full"
         }`}
         onClick={(e) => e.stopPropagation()}
