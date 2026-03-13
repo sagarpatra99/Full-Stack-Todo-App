@@ -29,24 +29,29 @@ export const AllTask = () => {
   return (
     <>
       <div
-        className={`min-h-screen relative w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white ${open ? "blur-[2px]" : ""}`}
+        className={`min-h-screen relative w-full px-4 sm:px-16 lg:px-32 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white ${
+          open ? "blur-[2px]" : ""
+        }`}
       >
-        <nav className="flex items-center justify-between mb-4 sm:mb-0">
-          <div className="bg-[#103462] w-fit py-2 px-4 rounded-md flex items-center">
+        {/* Top Controls */}
+        <nav className="flex flex-col sm:flex-row gap-3 sm:gap-6 sm:items-center sm:justify-between mb-4">
+
+          {/* Search */}
+          <div className="bg-[#103462] w-full sm:w-fit py-2 px-3 sm:px-4 rounded-md flex items-center gap-2">
             <input
               type="text"
               placeholder="Search by task title..."
-              className="outline-none w-40 sm:w-72 text-sm"
+              className="outline-none w-full sm:w-64 lg:w-80 text-sm bg-transparent placeholder:text-[#8597AF]"
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
             />
-            <Search className="text-[#8597AF] h-5 w-5" />
+            <Search className="text-[#8597AF] h-5 w-5 shrink-0" />
           </div>
-          <div className="py-1.5 sm:py-2 px-2 sm:pl-4 w-20 rounded-md bg-[#103462]">
+
+          {/* Filter */}
+          <div className="py-2 px-3 sm:px-4 w-full sm:w-32 rounded-md bg-[#103462]">
             <select
-              name=""
-              id=""
-              className="mr-3 w-full outline-none text-[#8597AF] font-semibold cursor-pointer"
+              className="w-full outline-none bg-transparent text-[#8597AF] font-semibold cursor-pointer"
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
             >
@@ -56,8 +61,11 @@ export const AllTask = () => {
             </select>
           </div>
         </nav>
+
         <H4 h="Tasks List" className={"pb-2"} />
-        <div className="max-h-110 overflow-y-auto flex flex-col gap-6">
+
+        {/* Task List */}
+        <div className="max-h-[60vh] sm:max-h-[65vh] overflow-y-auto flex flex-col gap-4 sm:gap-6 pr-1">
           {loading ? (
             <>
               <TaskBarShimmer showIcon />
@@ -66,7 +74,9 @@ export const AllTask = () => {
               <TaskBarShimmer />
             </>
           ) : filteredTasks.length === 0 ? (
-            <h2 className="text-sm sm:text-lg">No tasks found</h2>
+            <h2 className="text-sm sm:text-lg text-gray-200">
+              No tasks found
+            </h2>
           ) : (
             filteredTasks.map((task) => {
               return (
@@ -81,18 +91,25 @@ export const AllTask = () => {
             })
           )}
         </div>
-        <div className="fixed right-10 bottom-20 sm:right-20 sm:bottom-20">
-          <button onClick={() => setOpen(true)} className="cursor-pointer">
-            <Plus className="bg-[#63D9F3] rounded-full h-10 w-10 p-1" />
+
+        {/* Floating Add Button */}
+        <div className="fixed right-6 bottom-24 sm:right-12 sm:bottom-20">
+          <button
+            onClick={() => setOpen(true)}
+            className="cursor-pointer hover:scale-105 transition"
+          >
+            <Plus className="bg-[#63D9F3] rounded-full h-11 w-11 p-2 shadow-lg" />
           </button>
         </div>
       </div>
+
       <CreateTask
         t="Create Task"
         open={open}
         setOpen={setOpen}
         refetchTasks={refetchTasks}
       />
+
       <Navbar />
     </>
   );

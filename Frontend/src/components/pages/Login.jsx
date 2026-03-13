@@ -28,11 +28,13 @@ export const Login = () => {
 
     setErrors({});
     setLoading(true);
+
     try {
       const response = await auth_api.post("/login", {
         email,
         password,
       });
+
       toast.success(response.data.message);
       navigate("/home");
     } catch (error) {
@@ -41,23 +43,33 @@ export const Login = () => {
       setLoading(false);
     }
   };
+
   return (
-    <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex sm:flex-row flex-col items-center justify-center text-white">
-      <div className="w-full sm:w-[50%] lg:w-[60%] px-4 3xs:px-6 2xs:px-12 xs:px-18 sm:px-48 lg:px-32 bg-purple-400k text-center space-y-6">
+    <div className="min-h-screen w-full bg-linear-to-b from-[#1251A6] to-[#062949] flex flex-col sm:flex-row items-center justify-center text-white px-4 sm:px-0">
+
+      {/* Form Section */}
+      <div className="w-full sm:w-[55%] lg:w-[60%] max-w-xl px-4 sm:px-10 lg:px-20 py-10 sm:py-16 text-center space-y-5">
+
         <div className="bg-white mx-auto w-fit p-4 rounded-full cursor-pointer shadow-2xl hover:shadow-lg duration-300 shadow-gray-200">
-          <Check size={30} className="text-[#08315A]" />
+          <Check size={28} className="text-[#08315A]" />
         </div>
-        <div className="text-start space-y-2">
-          <h2 className="3xs:text-2xl xs:text-3xl 2xl:text-4xl">
+
+        <div className="text-left space-y-2">
+          <h2 className="text-2xl xs:text-3xl sm:text-4xl font-semibold">
             Welcome Back to <span className="headingFont">DO IT</span>
           </h2>
-          <p className="text-xl 3xs:text-base 2xs:text-lg">
-            Have an other productive day !
+
+          <p className="text-sm xs:text-base sm:text-lg text-gray-200">
+            Have another productive day!
           </p>
         </div>
+
         {errors.email && (
-          <p className="text-red-500 text-sm text-start mb-1">{errors.email}</p>
+          <p className="text-red-400 text-sm text-left">
+            {errors.email}
+          </p>
         )}
+
         <InputField
           icon={Mail}
           type="email"
@@ -67,12 +79,14 @@ export const Login = () => {
             setErrors((prev) => ({ ...prev, email: "" }));
           }}
         />
+
         <div>
           {errors.password && (
-            <p className="text-red-500 text-sm text-start mb-1">
+            <p className="text-red-400 text-sm text-left">
               {errors.password}
             </p>
           )}
+
           <InputField
             icon={Lock}
             type="password"
@@ -83,33 +97,49 @@ export const Login = () => {
               setErrors((prev) => ({ ...prev, password: "" }));
             }}
           />
-          <Button
-            to="/signup"
-            text={"Forgot Password?"}
-            className="text-end underline"
-            variant="ghost"
-          />
+
+          <div className="text-right mt-1">
+            <Button
+              to="/signup"
+              text={"Forgot Password?"}
+              className="underline text-sm"
+              variant="ghost"
+            />
+          </div>
         </div>
+
         <Button
           onClick={handleSubmit}
-          text={`${loading ? "Signing In" : "Sign In"}`}
+          text={`${loading ? "Signing In..." : "Sign In"}`}
         />
-        <div className="flex items-center justify-center gap-2">
+
+        <div className="flex flex-wrap items-center justify-center gap-2 text-sm sm:text-base">
           <span>Don’t have an account?</span>
           <Button to="/signup" text={"Sign Up"} variant="ghost" />
         </div>
-        <div className="flex items-center gap-6">
-          <p>Sign In with :</p>
-          <Link to="/" className="bg-white p-2 rounded-md">
-            <img src={appleIcon} alt="" className="h-8" />
-          </Link>
-          <Link to="/" className="bg-white p-2 rounded-md">
-            <img src={googleIcon} alt="" className="h-8" />
-          </Link>
+
+        <div className="flex flex-col xs:flex-row items-center justify-center gap-4 sm:gap-6 pt-2">
+          <p className="text-sm sm:text-base">Sign In with :</p>
+
+          <div className="flex gap-4">
+            <Link to="/" className="bg-white p-2 rounded-md hover:scale-105 transition">
+              <img src={appleIcon} alt="apple" className="h-7 sm:h-8" />
+            </Link>
+
+            <Link to="/" className="bg-white p-2 rounded-md hover:scale-105 transition">
+              <img src={googleIcon} alt="google" className="h-7 sm:h-8" />
+            </Link>
+          </div>
         </div>
       </div>
-      <div className="hidden sm:block sm:w-[50%] lg:w-[40%] sm:pl-36 lg:pl-5">
-        <img src={loginDesktop} alt="" className="rounded-lg" />
+
+      {/* Image Section */}
+      <div className="hidden sm:flex sm:w-[45%] lg:w-[40%] items-center justify-center p-6">
+        <img
+          src={loginDesktop}
+          alt="login"
+          className="w-full max-w-md lg:max-w-lg rounded-lg"
+        />
       </div>
     </div>
   );

@@ -13,25 +13,37 @@ export const Home = () => {
   const { user, setUser, pendingTasks, completedTasks, loading } = useHomeData();
 
   if (loading) return <HomeShimmer />;
+
   return (
-    <div className="min-h-screen w-full px-6 sm:px-40 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
+    <div className="min-h-screen w-full px-4 sm:px-16 lg:px-32 py-6 sm:py-10 bg-linear-to-b from-[#1251A6] to-[#062949] text-white">
+
       <Profile user={user} setUser={setUser} />
-      <div className="space-y-3 sm:space-y-6">
+
+      <div className="space-y-6 sm:space-y-8">
+
+        {/* Group Task Section */}
         <div>
           <H4 h="Group Tasks" className="pb-2" />
-          <div className="">
-            <Link to={"/alltask"}>
-              <div className="py-6 sm:py-10 px-4 sm:px-8 rounded-md flex items-center gap-2 sm:gap-4 bg-[#0a3058] w-fit text-gray-200">
-                <Plus /> <span className="sm:text-2xl">Create Group</span>
-              </div>
-            </Link>
-          </div>
+
+          <Link to={"/alltask"}>
+            <div className="py-4 sm:py-6 px-4 sm:px-8 rounded-md flex items-center gap-2 sm:gap-4 bg-[#0a3058] w-fit text-gray-200 hover:bg-[#0c3c6f] transition cursor-pointer">
+              <Plus className="h-5 w-5 sm:h-6 sm:w-6" />
+              <span className="text-base sm:text-xl lg:text-2xl">
+                Create Group
+              </span>
+            </div>
+          </Link>
         </div>
-        <div className="">
-            <H4 h={"Incomplete Tasks"} className="pb-2" />
-          <div className="flex flex-col gap-4 sm:gap-6 h-30 max-h-30 overflow-y-auto">
+
+        {/* Incomplete Tasks */}
+        <div>
+          <H4 h={"Incomplete Tasks"} className="pb-2" />
+
+          <div className="flex flex-col gap-3 sm:gap-5 max-h-[120px] sm:max-h-[160px] overflow-y-auto pr-1">
             {pendingTasks.length === 0 ? (
-              <h2 className="text-sm sm:text-lg">No Pending Tasks Found</h2>
+              <h2 className="text-sm sm:text-lg text-gray-200">
+                No Pending Tasks Found
+              </h2>
             ) : (
               pendingTasks.map((pendingTask) => {
                 return (
@@ -46,11 +58,16 @@ export const Home = () => {
             )}
           </div>
         </div>
+
+        {/* Completed Tasks */}
         <div>
           <H4 h="Completed Tasks" className={"pb-2"} />
-          <div className="flex flex-col gap-4 sm:gap-6 max-h-30 overflow-y-auto">
+
+          <div className="flex flex-col gap-3 sm:gap-5 max-h-[120px] sm:max-h-[160px] overflow-y-auto pr-1">
             {completedTasks.length === 0 ? (
-              <h2 className="text-sm sm:text-lg">No Completed Tasks Found</h2>
+              <h2 className="text-sm sm:text-lg text-gray-200">
+                No Completed Tasks Found
+              </h2>
             ) : (
               completedTasks.map((completedTask) => {
                 return (
@@ -65,7 +82,9 @@ export const Home = () => {
             )}
           </div>
         </div>
+
       </div>
+
       <Navbar />
     </div>
   );
