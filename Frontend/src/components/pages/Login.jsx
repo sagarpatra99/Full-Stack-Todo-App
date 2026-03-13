@@ -1,4 +1,4 @@
-import { Check, Lock, Mail, User } from "lucide-react";
+import { Check, Lock, Mail } from "lucide-react";
 import loginDesktop from "../../assets/login-desktop.png";
 import appleIcon from "../../assets/apple-icon.png";
 import googleIcon from "../../assets/google-icon.png";
@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { useState } from "react";
 import { auth_api } from "@/api/auth.api";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import InputField from "../common/InputField";
 
 export const Login = () => {

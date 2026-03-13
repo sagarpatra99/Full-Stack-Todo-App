@@ -6,7 +6,6 @@ import { formatDate } from "@/utils/formatDate";
 import { useHomeData } from "@/hooks/useHomeData";
 import { H4 } from "../common/H4";
 import { Navbar } from "../ui/Navbar";
-import { LoadingSpinner } from "../common/LoadingSpinner";
 import { TaskBarShimmer } from "../shimmer/TaskBarShimmer";
 
 export const AllTask = () => {

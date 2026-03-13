@@ -7,7 +7,7 @@ import { formatTaskDay, formatTaskTime } from "@/utils/formatDate";
 import { DetailsBtn } from "../ui/DetailsBtn";
 import { H4 } from "../common/H4";
 import { TitleBar } from "../ui/TitleBar";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import { CreateTask } from "./CreateTask";
 import { AlertDialogBox } from "../common/AlertDialogBox";
 
@@ -28,6 +28,7 @@ export const TaskDetails = () => {
 
   const handleDeleteTask = async () => {
     await task_api.delete(`/${taskId}`);
+    toast.success("Task deleted successfully!")
     navigate(-1);
   };
 

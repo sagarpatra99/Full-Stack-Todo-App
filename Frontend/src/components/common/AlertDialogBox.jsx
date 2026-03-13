@@ -9,6 +9,7 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import { toast } from "react-toastify";
 
 export const AlertDialogBox = ({
   title,
@@ -36,7 +37,13 @@ export const AlertDialogBox = ({
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
 
-          <AlertDialogAction onClick={fn} className={actionClass}>
+          <AlertDialogAction
+            onClick={() => {
+              fn();
+              toast.success("Task deleted successfully!");
+            }}
+            className={actionClass}
+          >
             {yes}
           </AlertDialogAction>
         </AlertDialogFooter>

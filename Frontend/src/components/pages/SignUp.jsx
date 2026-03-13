@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button } from "../common/Button";
 import { useState } from "react";
 import { auth_api } from "@/api/auth.api";
-import { toast } from "react-toastify";
+import { toast } from "sonner";
 import InputField from "../common/InputField";
 
 export const SignUp = () => {
