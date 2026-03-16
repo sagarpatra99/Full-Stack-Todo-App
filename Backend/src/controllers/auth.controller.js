@@ -1,114 +1,10 @@
 const userModel = require("../model/user.model");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const blacklistModel = require("../model/blacklist.model");
-const { sendEmail } = require("../services/mail.service");
-
-// const controllerRegister = async (req, res) => {
-//   try {
-//     const { fullname, email, password } = req.body;
-
-//     if (!fullname || !email || !password) {
-//       return res.status(400).json({
-//         message: "All fields are required",
-//         success: false,
-//       });
-//     }
-
-//     const existingUser = await userModel.findOne({ email });
-
-//     if (existingUser)
-//       return res.status(409).json({
-//         message: "Email already exists!",
-//         success: false,
-//         error: "User already exists",
-//       });
-
-//     const hash = await bcrypt.hash(password, 10);
-
-//     const user = await userModel.create({
-//       fullname,
-//       email,
-//       password: hash,
-//     });
-
-//     const emailVerificationToken = jwt.sign(
-//       { id: user._id, email: user.email },
-//       process.env.JWT_SECRET,
-//       { expiresIn: "1h" },
-//     );
-
-//     try {
-//       sendEmail({
-//         to: email,
-//         subject: "Welcome to DO IT",
-//         html: `
-//       <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
-//         <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
-
-//           <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
-
-//           <p>Hi <b>${fullname}</b>,</p>
-
-//           <p>
-//             Thank you for registering at <b>DO IT</b>.
-//             We're excited to have you on board!
-//           </p>
-
-//           <p>
-//             Start organizing your tasks and boost your productivity today.
-//           </p>
-
-//           <p>
-//             Please verify your email by clicking the link below :-
-//           </p>
-
-//           <a href="https://full-stack-todo-app-3v4h.onrender.com/api/auth/verify-email?token=${emailVerificationToken}">Verify Email</a>
-
-//           <hr style="margin:20px 0"/>
-
-//           <p style="font-size:14px; color:gray;">
-//             Best regards,<br/>
-//             <b>DO IT Team</b>
-//           </p>
-
-//         </div>
-//       </div>
-//     `,
-//       });
-//     } catch (emailError) {
-//       console.error("Email sending failed:", emailError.message);
-//     }
-
-//     // const token = jwt.sign(
-//     //   { id: user._id, email: user.email },
-//     //   process.env.JWT_SECRET,
-//     //   { expiresIn: "1h" },
-//     // );
-
-//     res.cookie("token", emailVerificationToken, {
-//       httpOnly: true,
-//       secure: true,
-//       sameSite: "none",
-//       maxAge: 60 * 60 * 1000, // 1 hour
-//     });
-
-//     res.status(201).json({
-//       message: "User Registered Successfully",
-//       success: true,
-//       user,
-//     });
-//   } catch (error) {
-//     res.status(500).json({
-//       message: "Server error",
-//       error: error.message,
-//     });
-//   }
-// };
+const redis = require("../config/cache");
 
 const controllerRegister = async (req, res) => {
   try {
-
     // console.log("Register API hit");
 
     const { fullname, email, password } = req.body;
@@ -154,7 +50,7 @@ const controllerRegister = async (req, res) => {
     //   html: `
     //   <div style="font-family: Arial, sans-serif; padding:20px; background:#f4f4f4;">
     //     <div style="max-width:600px; margin:auto; background:white; padding:30px; border-radius:8px;">
-          
+
     //       <h2 style="color:#0EA5E9;">Welcome to DO IT 🚀</h2>
 
     //       <p>Hi <b>${fullname}</b>,</p>
@@ -187,7 +83,7 @@ const controllerRegister = async (req, res) => {
 
     const { password: _, ...safeUser } = user.toObject();
 
-        res.cookie("token", token, {
+    res.cookie("token", token, {
       httpOnly: true,
       secure: true,
       sameSite: "none",
@@ -201,7 +97,7 @@ const controllerRegister = async (req, res) => {
     });
   } catch (error) {
     console.error("Register controller error:", error);
-    
+
     res.status(500).json({
       message: "Server error",
       error: error.message,
@@ -426,9 +322,7 @@ const controllerLogoutUser = async (req, res) => {
   try {
     const token = req.cookies.token;
 
-    if (token) {
-      await blacklistModel.create({ token });
-    }
+    redis.set(token, Date.now().toString());
 
     res.clearCookie("token", {
       httpOnly: true,
