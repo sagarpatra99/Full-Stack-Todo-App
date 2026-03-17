@@ -286,7 +286,7 @@ const controllerLogin = async (req, res) => {
         id: user._id,
         fullname: user.fullname,
         email: user.email,
-      },
+      }
     });
   } catch (error) {
     res.status(500).json({
