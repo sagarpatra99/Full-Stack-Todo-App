@@ -321,9 +321,9 @@ const controllerGetMe = async (req, res) => {
 
 const controllerLogoutUser = async (req, res) => {
   try {
-    const token = req.cookies.token;
+    // const token = req.cookies.token;
 
-    await redis.set(token, Date.now().toString(), "EX", 60 * 60);
+    // await redis.set(token, Date.now().toString(), "EX", 60 * 60);
 
     res.clearCookie("token", {
       httpOnly: true,
