@@ -10,12 +10,12 @@ const identifyUser = async (req, res, next) => {
     });
 
   try {
-    const isBlacklisted = await redis.get(token);
+    // const isBlacklisted = await redis.get(token);
 
-    if (isBlacklisted)
-      return res.status(401).json({
-        message: "Invalid token",
-      });
+    // if (isBlacklisted)
+    //   return res.status(401).json({
+    //     message: "Invalid token",
+    //   });
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
