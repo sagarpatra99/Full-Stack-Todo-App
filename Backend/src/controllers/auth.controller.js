@@ -281,6 +281,7 @@ const controllerLogin = async (req, res) => {
     res.status(200).json({
       message: "User Login Successfully",
       success: true,
+      token,
       user: {
         id: user._id,
         fullname: user.fullname,
